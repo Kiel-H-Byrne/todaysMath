@@ -1,5 +1,7 @@
-
 <!--- These are examples. See https://shields.io for others or to customize this set of shields. You might want to include dependencies, project status and license info here --->
+<!--
+
+
 ![Github License](https://img.shields.io/github/license/tdotholla/todaysMath)
 ![Node Version](https://img.shields.io/node/v/canary)
 ![W3C Validation](https://img.shields.io/w3c-validation/default?targetUrl=https%3A%2F%2Fwww.todaysmath-rho-ebon.now.sh/)
@@ -12,7 +14,6 @@
 ![GitHub Issues](https://img.shields.io/github/issues-raw/tdotholla/todaysMath)
 ![GitHub contributors](https://img.shields.io/github/contributors/tdotholla/todaysMath)
 ![Github Last Commit](https://img.shields.io/github/last-commit/tdotholla/todaysMath)
-<!--
 
 ![Github Commit Activity](https://img.shields.io/github/commit-activity/m/tdotholla/todaysMath)
 ![GitHub stars](https://img.shields.io/github/stars/tdotholla/todaysMath?style=social)
@@ -21,23 +22,22 @@
 
 -->
 
-#todaysMath - The Supreme Calendar
-This PWA is a utility to give you the Supreme Mathetmatics for the day.  
-
+# todaysMath - The Supreme Calendar
+This PWA is a utility to give you the Supreme Mathetmatics for the day.
 
 **_Visit [todaysmath-rho-ebon.now.sh/](https://todaysmath-rho-ebon.now.sh/)_**
 
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
-* You have installed the latest version of `node`, and `yarn`.
-* You have a `<Windows/Linux/Mac>` machine. (I have not tested on Linux, but should work fine)
-* You have read [SUPPORT.md](SUPPORT.md).
 
+- You have installed the latest version of `node`, and `yarn`.
+- You have a `<Windows/Linux/Mac>` machine. (I have not tested on Linux, but should work fine)
+- You have read [SUPPORT.md](SUPPORT.md).
 
 ## Architecture
 
-- React.js 
+- React.js
 - Material-UI
 - Next.js
 - Now Deployment
@@ -58,8 +58,7 @@ First off, thank you for considering contributing to the Supreme Calendar. It’
 
 Thanks to the following people who have contributed to this project:
 
-* [@DevCollectiv](https://github.com/DevCollectiv) 📖💻🤔⚠️
-
+- [@DevCollectiv](https://github.com/DevCollectiv) 📖💻🤔⚠️
 
 ## Licenses
 
