@@ -1,0 +1,21 @@
+{
+  "short_name": "SuCal",
+  "name": "The Supreme Calendar",
+  "description": "365 Days of Supreme Mathematics",
+  "start_url": "/?utm_source=homescreen",
+  "background_color": "#040",
+  "theme_color": "#000",
+  "display": "standalone"
+  // "icons": [
+  //   {
+  //     "src": "/img/icons/apple-touch-icon-192x192.png",
+  //     "sizes": "192x192",
+  //     "type": "image/png"
+  //   },
+  //   {
+  //     "src": "/img/icons/apple-touch-icon-512x512.png",
+  //     "sizes": "512x512",
+  //     "type": "image/png"
+  //   }
+  // ]
+}
