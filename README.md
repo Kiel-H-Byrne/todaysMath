@@ -4,7 +4,7 @@
 
 ![Github License](https://img.shields.io/github/license/tdotholla/todaysMath)
 ![Node Version](https://img.shields.io/node/v/canary)
-![W3C Validation](https://img.shields.io/w3c-validation/default?targetUrl=https%3A%2F%2Fwww.todaysmath-rho-ebon.now.sh/)
+![W3C Validation](https://img.shields.io/w3c-validation/default?targetUrl=https%3A%2F%2Fwww.todaysmath.kielbyrne.now.sh/)
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/tdotholla/todaysMath)
 ![Github code size](https://img.shields.io/github/languages/code-size/tdotholla/todaysMath)
@@ -25,7 +25,7 @@
 # todaysMath - The Supreme Calendar
 This PWA is a utility to give you the Supreme Mathetmatics for the day.
 
-**_Visit [todaysmath-rho-ebon.now.sh/](https://todaysmath-rho-ebon.now.sh/)_**
+**_Visit [todaysmath.kielbyrne.now.sh/](https://todaysmath.kielbyrne.now.sh/)_**
 
 ## Prerequisites
 
