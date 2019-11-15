@@ -99,6 +99,11 @@ const Home = () => {
   const today = new Date();
   const dateArray = getDays(today);
   let dateSum = dateArray.reduce((a, b) => parseInt(a) + parseInt(b), 0);
+  let sumArray = dateSum > 9 ? Array.from(sumArray) : null;
+  let sumSum = sumArray
+    ? sumArray.reduce((a, b) => parseInt(a) + parseInt(b), 0)
+    : null;
+
   // console.log(dateSum);
   // dateSum > 9
   //   ? dateSum.toString.split("").reduce((a, b) => a + b, 0)
@@ -150,7 +155,12 @@ const Home = () => {
                 {NUM_MAP[dateSum].meaning}
               </Typography>
             </>
-          ) : null}
+          ) : (
+            sumArray.map((day, idx) => (
+            <Typography key={idx} className={classes.meaning} display="inline">
+              {NUM_MAP[day].meaning}
+            </Typography>
+          )))
         </Grid>
       </Grid>
     </Container>
