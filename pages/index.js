@@ -2,10 +2,21 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Container, Typography, LinearProgress } from "@material-ui/core";
+import Analytics from "analytics";
+import googleAnalytics from "@analytics/google-analytics";
 
 import Head from "../components/head";
 import Nav from "../components/nav";
 import { format } from "date-fns";
+
+const GA = Analytics({
+  app: "todaysMath",
+  plugins: [
+    googleAnalytics({
+      trackingId: "UA-12892693-12"
+    })
+  ]
+});
 
 const CHAR_MAP = {
   A: { value: 1, meaning: "Allah" },
@@ -88,7 +99,7 @@ const Home = () => {
   const today = new Date();
   const dateArray = getDays(today);
   let dateSum = dateArray.reduce((a, b) => parseInt(a) + parseInt(b), 0);
-  console.log(dateSum);
+  // console.log(dateSum);
   // dateSum > 9
   //   ? dateSum.toString.split("").reduce((a, b) => a + b, 0)
   //   : dateSum;
