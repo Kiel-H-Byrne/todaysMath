@@ -19,7 +19,9 @@ class MyDocument extends Document {
         <Head title="The Supreme Calendar" />
         <body>
           <noscript>You need to enable JavaScript to run this app.</noscript>
+
           <Main />
+
           <NextScript />
           <script
             crossOrigin="true"

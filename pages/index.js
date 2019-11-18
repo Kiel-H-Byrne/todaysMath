@@ -153,7 +153,7 @@ const Home = () => {
   };
 
   return (
-    <Container className={classes.root}>
+    <div className={classes.root}>
       <Nav />
       <Grid
         container
@@ -245,7 +245,7 @@ const Home = () => {
           </Grid>
         </Grid>
       </Grid>
-    </Container>
+    </div>
   );
 };
 
