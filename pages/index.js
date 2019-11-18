@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Container, Typography, LinearProgress } from "@material-ui/core";
+import {
+  Grid,
+  Container,
+  Typography,
+  LinearProgress,
+  Input,
+  Button
+} from "@material-ui/core";
 import Analytics from "analytics";
 import googleAnalytics from "@analytics/google-analytics";
 
-import Head from "../components/head";
 import Nav from "../components/nav";
 import { format } from "date-fns";
 
@@ -62,7 +68,7 @@ const NUM_MAP = {
 
 const getDays = date => {
   let days = date
-    .getUTCDate()
+    .getDate()
     .toString()
     .split("");
   return days;
@@ -71,9 +77,10 @@ const getDays = date => {
 const useStyles = makeStyles({
   root: {
     // background:
-    //   "linear-gradient(rgba(240, 0, 255, 0.5), rgba(255, 255, 0, 0.5)), url('img/handEarth.jpg')"
+    //   "linear-gradient(rgba(240, 0, 255, 0.5), rgba(255, 255, 0, 0.5)), url('img/handEarth.jpg')",
+    height: "100%"
   },
-  date: { color: "#FE6B8B" },
+  date: { color: "#FE6B8B", fontWeight: "bolder" },
   sentence: { display: "inline", fontSize: "3rem" },
   meaning: {
     display: "inline",
@@ -84,6 +91,10 @@ const useStyles = makeStyles({
     fontSize: "3.33rem",
     boxShadow: "0 .3rem .5rem .3rem rgba(212, 175, 55, .3)"
   },
+  input: {
+    fontSize: "24px",
+    fontFamily: "cursive, fantasy, oblique"
+  },
   footer: {
     position: "relative",
     bottom: 0
@@ -93,16 +104,19 @@ const useStyles = makeStyles({
 const Home = () => {
   // const [name, setName] = useState(""); //user name from input
   // const [score, setScore] = useState(0); //the end value of adding name values.
-
+  const [currentComment, setCurrentComment] = useState("");
+  const [comments, setComments] = useState([]);
   const classes = useStyles();
 
   const today = new Date();
-  const dateArray = getDays(today);
-  let dateSum = dateArray.reduce((a, b) => parseInt(a) + parseInt(b), 0);
-  let sumArray = dateSum > 9 ? Array.from(sumArray) : null;
-  let sumSum = sumArray
+  const dateArray = getDays(today); //date split into array of two numbers
+  let dateSum = dateArray.reduce((a, b) => parseInt(a) + parseInt(b), 0); // sum of dateArray elements
+  let sumArray = dateSum > 9 ? Array.from(dateSum.toString()) : null; //dateSum split into array of two numbers
+  let sumSum = sumArray // sum of sumArray elements
     ? sumArray.reduce((a, b) => parseInt(a) + parseInt(b), 0)
     : null;
+
+  // console.log(...[today, dateArray, dateSum, sumArray, sumSum]);
 
   // console.log(dateSum);
   // dateSum > 9
@@ -118,49 +132,117 @@ const Home = () => {
   };
 
   const handleChange = event => {
+    event.preventDefault();
+    setCurrentComment(event.target.value);
+  };
+
+  const handleChange2 = event => {
     setName(event.target.value);
     let value = reduceName(event.target.value);
     setScore(value);
   };
 
+  const handleSubmit = event => {
+    event.preventDefault();
+    let uid = new Date().getMilliseconds();
+    {
+      comments[uid] = currentComment;
+    }
+    setComments(comments);
+    setCurrentComment("");
+  };
+
   return (
     <Container className={classes.root}>
-      <Head title="The Supreme Calendar" />
-
       <Nav />
-
-      <Grid container direction="column" className="">
-        <Grid item container direction="row">
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        justify="space-between"
+      >
+        <Grid item container direction="row" style={{ margin: "1em auto" }}>
           <Typography className={classes.sentence}>
-            Today's Date is
+            Today's Date is{" "}
             <span className={classes.date}>
               {format(today, "EEEE, MMMM 'the' do")}
             </span>
             ,
           </Typography>
           <Typography className={classes.sentence}>
-            making today's Math
+            making today's Math{" "}
           </Typography>
           {dateArray.map((day, idx) => (
             <Typography key={idx} className={classes.meaning} display="inline">
               {NUM_MAP[day].meaning}
             </Typography>
           ))}
+          <span className={classes.sentence}>&mdash;</span>
           {dateSum < 10 ? (
-            <>
+            <React.Fragment>
               <Typography className={classes.sentence} display="inline">
-                all being born to
+                all being born to{" "}
               </Typography>
               <Typography className={classes.meaning} display="inline">
                 {NUM_MAP[dateSum].meaning}
               </Typography>
-            </>
+            </React.Fragment>
           ) : (
-            sumArray.map((day, idx) => (
-            <Typography key={idx} className={classes.meaning} display="inline">
-              {NUM_MAP[day].meaning}
+            <React.Fragment>
+              <Typography className={classes.sentence} display="inline">
+                all being born to{" "}
+              </Typography>
+              {sumArray.map((day, idx) => (
+                <Typography
+                  key={idx}
+                  className={classes.meaning}
+                  display="inline"
+                >
+                  {NUM_MAP[day].meaning}
+                </Typography>
+              ))}
+              <span className={classes.sentence}>&mdash;</span>
+              <Typography className={classes.sentence} display="inline">
+                all being born to{" "}
+              </Typography>
+              <Typography className={classes.meaning} display="inline">
+                {NUM_MAP[sumSum].meaning}
+              </Typography>
+            </React.Fragment>
+          )}
+        </Grid>
+
+        <Grid
+          item
+          container
+          direction="row-reverse"
+          style={{ margin: "1em auto", width: "70ch" }}
+        >
+          <Grid item xs={12} sm={7}>
+            <Typography variant="h5" align="center">
+              Comments:
+              {comments.map(comment => (
+                <li>{comment}</li>
+              ))}
             </Typography>
-          )))
+          </Grid>
+          <Grid item xs={12} sm={5}>
+            <Typography variant="h5" align="center">
+              Discussion:
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <Input
+                multiline
+                fullWidth
+                rows={7}
+                className={classes.input}
+                onChange={handleChange}
+              ></Input>
+              <Button variant="text" fullWidth color="secondary" type="submit">
+                Post
+              </Button>
+            </form>
+          </Grid>
         </Grid>
       </Grid>
     </Container>

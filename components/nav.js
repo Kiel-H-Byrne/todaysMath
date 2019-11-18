@@ -10,6 +10,10 @@ const links = [
     href:
       "https://genius.com/Nation-of-gods-and-earths-supreme-mathematics-annotated",
     label: "Genius"
+  },
+  {
+    href: "https://kielbyrne.com",
+    label: "About"
   }
 ].map(link => {
   link.key = `nav-link-${link.href}-${link.label}`;
