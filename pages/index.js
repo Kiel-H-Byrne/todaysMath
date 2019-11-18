@@ -9,20 +9,10 @@ import {
   Input,
   Button
 } from "@material-ui/core";
-import Analytics from "analytics";
-import googleAnalytics from "@analytics/google-analytics";
 
 import Nav from "../components/nav";
 import { format } from "date-fns";
 
-const GA = Analytics({
-  app: "todaysMath",
-  plugins: [
-    googleAnalytics({
-      trackingId: "UA-12892693-12"
-    })
-  ]
-});
 
 const CHAR_MAP = {
   A: { value: 1, meaning: "Allah" },
