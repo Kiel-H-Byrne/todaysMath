@@ -17,7 +17,6 @@ const GA = Analytics({
 GA.on("track", ({ payload }) => {
   console.log("track call just happened. Do stuff");
 });
-GA.initialize();
 GA.page();
 
 const appSettings = {
