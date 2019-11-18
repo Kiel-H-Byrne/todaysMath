@@ -1,8 +1,21 @@
 import React from "react";
 import Document, { Main, NextScript } from "next/document";
 import { ServerStyleSheets } from "@material-ui/styles";
+import Analytics from "analytics";
+import googleAnalytics from "@analytics/google-analytics";
 
 import Head from "../components/head";
+
+const GA = Analytics({
+  app: "todaysMath",
+  plugins: [
+    googleAnalytics({
+      trackingId: "UA-12892693-12"
+    })
+  ]
+});
+
+GA.page();
 
 const appSettings = {
   name: "365 Days of Supreme Math",
