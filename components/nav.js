@@ -3,16 +3,16 @@ import Link from "next/link";
 import { Button, Toolbar, AppBar } from "@material-ui/core";
 const links = [
   {
-    href: "https://en.wikipedia.org/wiki/Five-Percent_Nation",
+    href: "//en.wikipedia.org/wiki/Five-Percent_Nation",
     label: "NGE Info"
   },
   {
     href:
-      "https://genius.com/Nation-of-gods-and-earths-supreme-mathematics-annotated",
+      "//genius.com/Nation-of-gods-and-earths-supreme-mathematics-annotated",
     label: "Genius"
   },
   {
-    href: "https://kielbyrne.com",
+    href: "//kielbyrne.com",
     label: "About"
   }
 ].map(link => {

@@ -9,10 +9,15 @@ import {
   Input,
   Button
 } from "@material-ui/core";
+import ReactGA from "react-ga";
 
 import Nav from "../components/nav";
 import { format } from "date-fns";
 
+ReactGA.initialize("UA-12892693-12");
+if (process.browser) {
+  ReactGA.pageview(window.location.pathname + window.location.search);
+}
 
 const CHAR_MAP = {
   A: { value: 1, meaning: "Allah" },
@@ -151,7 +156,12 @@ const Home = () => {
         alignItems="center"
         justify="space-between"
       >
-        <Grid item container direction="row" style={{ margin: "1em auto" }}>
+        <Grid
+          item
+          container
+          direction="row"
+          style={{ margin: "1rem auto", padding: "1rem 3rem" }}
+        >
           <Typography className={classes.sentence}>
             Today's Date is{" "}
             <span className={classes.date}>
@@ -206,7 +216,7 @@ const Home = () => {
           item
           container
           direction="row-reverse"
-          style={{ margin: "1em auto", width: "70ch" }}
+          style={{ margin: "1em auto", padding: "1rem" }}
         >
           <Grid item xs={12} sm={7}>
             <Typography variant="h5" align="center">
