@@ -110,7 +110,7 @@ const Home = () => {
   let sumSum = sumArray // sum of sumArray elements
     ? sumArray.reduce((a, b) => parseInt(a) + parseInt(b), 0)
     : null;
-  console.log({ today, dateArray, dateSum, sumArray, sumSum });
+  // console.log({ today, dateArray, dateSum, sumArray, sumSum });
   // today's date is a number.
   // if the number is greater than 9 (or has two digits), add those numbers up.
   // if the result is greater than 9, do it again. until 1 number is produced.
