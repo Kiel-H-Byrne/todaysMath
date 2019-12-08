@@ -103,7 +103,7 @@ const Home = () => {
   const [comments, setComments] = useState([]);
   const classes = useStyles();
 
-  const today = new Date("9/21/2020");
+  const today = new Date();
   const dateArray = getDays(today); //date split into array
   let dateSum = dateArray.reduce((a, b) => parseInt(a) + parseInt(b), 0); // sum of dateArray elements
   let sumArray = dateSum > 9 ? Array.from(dateSum.toString()) : null; //dateSum split into array of two numbers
