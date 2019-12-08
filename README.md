@@ -25,7 +25,7 @@
 # todaysMath - The Supreme Calendar
 This PWA is a utility to give you the Supreme Mathetmatics for the day.
 
-**_Visit [todaysmath.kielbyrne.now.sh/](https://todaysmath.kielbyrne.now.sh/)_**
+**_Visit [todaysmath.kielbyrne.now.sh/](https://todaysmath.kielbyrne.com/)_**
 
 ## Prerequisites
 
