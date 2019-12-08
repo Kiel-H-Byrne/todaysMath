@@ -4,16 +4,16 @@ import { Button, Toolbar, AppBar } from "@material-ui/core";
 const links = [
   {
     href: "//en.wikipedia.org/wiki/Five-Percent_Nation",
-    label: "NGE Info"
+    label: "NGE Information"
   },
   {
     href:
       "//genius.com/Nation-of-gods-and-earths-supreme-mathematics-annotated",
-    label: "Genius"
+    label: "Supreme Math Information"
   },
   {
-    href: "//kielbyrne.com",
-    label: "About"
+    href: "//linkedin.com/in/kielbyrne",
+    label: "About Me"
   }
 ].map(link => {
   link.key = `nav-link-${link.href}-${link.label}`;
@@ -23,13 +23,19 @@ const links = [
 const Nav = () => (
   <AppBar position="static" color="default">
     <Toolbar>
-      <li>
-        <Link href="/">
-          <a>
-            <Button variant="text">Home</Button>
-          </a>
-        </Link>
-      </li>
+      <Link href="/">
+        <a>
+          <img
+            height="53px"
+            width="53px"
+            src="https://i.pinimg.com/originals/76/55/0c/76550cdb7a2de95138746d536e99c7ae.png"
+            alt="Nation of Gods &amp; Earths"
+            title="Nation of Gods &amp; Earths"
+            className="test2"
+          />
+        </a>
+      </Link>
+
       {links.map(({ key, href, label }) => (
         <Link key={key} href={href}>
           <a target="_blank">

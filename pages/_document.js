@@ -3,6 +3,7 @@ import Document, { Main, NextScript } from "next/document";
 import { ServerStyleSheets } from "@material-ui/styles";
 
 import Head from "../components/head";
+import "./../styles/style.scss";
 
 const appSettings = {
   name: "365 Days of Supreme Math",

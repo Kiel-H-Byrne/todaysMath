@@ -9,10 +9,10 @@ import {
   Input,
   Button
 } from "@material-ui/core";
+import { format } from "date-fns";
 import ReactGA from "react-ga";
 
-import Nav from "../components/nav";
-import { format } from "date-fns";
+import Nav from "./../components/nav";
 
 ReactGA.initialize("UA-12892693-12");
 if (process.browser) {
@@ -103,22 +103,25 @@ const Home = () => {
   const [comments, setComments] = useState([]);
   const classes = useStyles();
 
-  const today = new Date();
-  const dateArray = getDays(today); //date split into array of two numbers
+  const today = new Date("9/21/2020");
+  const dateArray = getDays(today); //date split into array
   let dateSum = dateArray.reduce((a, b) => parseInt(a) + parseInt(b), 0); // sum of dateArray elements
   let sumArray = dateSum > 9 ? Array.from(dateSum.toString()) : null; //dateSum split into array of two numbers
   let sumSum = sumArray // sum of sumArray elements
     ? sumArray.reduce((a, b) => parseInt(a) + parseInt(b), 0)
     : null;
-
-  // console.log(...[today, dateArray, dateSum, sumArray, sumSum]);
+  // console.log({ today, dateArray, dateSum, sumArray, sumSum });
+  // today's date is a number.
+  // if the number is greater than 9 (or has two digits), add those numbers up.
+  // if the result is greater than 9, do it again. until 1 number is produced.
+  // i want date, then result(s)
 
   // console.log(dateSum);
   // dateSum > 9
   //   ? dateSum.toString.split("").reduce((a, b) => a + b, 0)
   //   : dateSum;
 
-  const reduceName = word => {
+  const reduceWord = word => {
     let value = Array.from(word).reduce((nameScore, element) => {
       let curValue = CHAR_MAP[element];
       return nameScore + curValue;
@@ -133,7 +136,7 @@ const Home = () => {
 
   const handleChange2 = event => {
     setName(event.target.value);
-    let value = reduceName(event.target.value);
+    let value = reduceWord(event.target.value);
     setScore(value);
   };
 
@@ -155,6 +158,7 @@ const Home = () => {
         direction="column"
         alignItems="center"
         justify="space-between"
+        className="test2"
       >
         <Grid
           item
@@ -163,34 +167,39 @@ const Home = () => {
           style={{ margin: "1rem auto", padding: "1rem 3rem" }}
         >
           <Typography className={classes.sentence}>
-            Today's Date is{" "}
+            Today's Date is&nbsp;
             <span className={classes.date}>
               {format(today, "EEEE, MMMM 'the' do")}
             </span>
-            ,
+            ,&nbsp;
           </Typography>
           <Typography className={classes.sentence}>
-            making today's Math{" "}
+            making today's Math:&nbsp;
           </Typography>
           {dateArray.map((day, idx) => (
             <Typography key={idx} className={classes.meaning} display="inline">
               {NUM_MAP[day].meaning}
             </Typography>
           ))}
-          <span className={classes.sentence}>&mdash;</span>
-          {dateSum < 10 ? (
+
+          {// DATE HAS TWO DIGITS? ADD THEM AND SHOW COMPONENT
+          dateSum < 10 && dateArray.length > 1 ? (
             <React.Fragment>
+              <span className={classes.sentence}>&mdash;</span>
               <Typography className={classes.sentence} display="inline">
-                all being born to{" "}
+                all being born to&nbsp;
               </Typography>
               <Typography className={classes.meaning} display="inline">
                 {NUM_MAP[dateSum].meaning}
               </Typography>
             </React.Fragment>
-          ) : (
+          ) : null}
+
+          {// DATE HAS TWO DIGITS? ADD THEM AND SHOW COMPONENT
+          sumArray ? (
             <React.Fragment>
               <Typography className={classes.sentence} display="inline">
-                all being born to{" "}
+                all being born to&nbsp;
               </Typography>
               {sumArray.map((day, idx) => (
                 <Typography
@@ -203,13 +212,13 @@ const Home = () => {
               ))}
               <span className={classes.sentence}>&mdash;</span>
               <Typography className={classes.sentence} display="inline">
-                all being born to{" "}
+                all being born to&nbsp;
               </Typography>
               <Typography className={classes.meaning} display="inline">
                 {NUM_MAP[sumSum].meaning}
               </Typography>
             </React.Fragment>
-          )}
+          ) : null}
         </Grid>
 
         <Grid
