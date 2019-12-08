@@ -9,10 +9,10 @@ import {
   Input,
   Button
 } from "@material-ui/core";
+import { format } from "date-fns";
 import ReactGA from "react-ga";
 
-import Nav from "../components/nav";
-import { format } from "date-fns";
+import Nav from "./../components/nav";
 
 ReactGA.initialize("UA-12892693-12");
 if (process.browser) {
@@ -155,6 +155,7 @@ const Home = () => {
         direction="column"
         alignItems="center"
         justify="space-between"
+        className="test2"
       >
         <Grid
           item
