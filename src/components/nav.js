@@ -87,8 +87,8 @@ const Nav = () => {
             </Link>
           </Grid>
           {links.map(({ key, href, label }) => (
-            <Grid item>
-              <Link key={key} href={href}>
+            <Grid item key={key}>
+              <Link href={href}>
                 <a target="_blank" rel="noopener" className={classes.link}>
                   <Button
                     variant="text"

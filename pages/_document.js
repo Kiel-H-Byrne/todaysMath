@@ -5,8 +5,8 @@ import { ServerStyleSheets } from "@material-ui/styles";
 import ReactGA from "react-ga";
 import Head from "../src/components/head";
 
+ReactGA.initialize("UA-12892693-12");
 if (process.browser) {
-  ReactGA.initialize("UA-12892693-12");
   ReactGA.pageview(window.location.pathname + window.location.search);
 }
 
