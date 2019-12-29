@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+
+import { postsUpdate, postsFetch } from "../db/fsdb";
+
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
@@ -103,6 +106,18 @@ const Home = () => {
   const [comments, setComments] = useState([]);
   const classes = useStyles();
 
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  async function getPosts() {
+    const response = await postsFetch(`${today.getDate()}`);
+    if (response) {
+      setComments(response);
+    } else {
+      setComments([]);
+    }
+  }
   const today = new Date();
   const dateArray = getDays(today); //date split into array
   let dateSum = dateArray.reduce((a, b) => parseInt(a) + parseInt(b), 0); // sum of dateArray elements
@@ -120,6 +135,29 @@ const Home = () => {
   // dateSum > 9
   //   ? dateSum.toString.split("").reduce((a, b) => a + b, 0)
   //   : dateSum;
+  let genGuid = function() {
+    let nav = window.navigator;
+    let screen = window.screen;
+    let guid = nav.mimeTypes.length;
+    guid += nav.userAgent.replace(/\D+/g, "");
+    guid += nav.plugins.length;
+    guid += screen.height || "";
+    guid += screen.width || "";
+    guid += screen.pixelDepth || "";
+    return guid;
+  };
+
+  const writePost = async message => {
+    let data = {};
+    let uuid = genGuid();
+    let date = new Date();
+    let duid = `${date.getDate()}`;
+    let puid = new Date().getMilliseconds();
+    let post = {};
+    post[puid] = message;
+    data = { uuid, message };
+    let refId = await postsUpdate(duid, data);
+  };
 
   const reduceWord = word => {
     let value = Array.from(word).reduce((nameScore, element) => {
@@ -142,14 +180,12 @@ const Home = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    let uid = new Date().getMilliseconds();
-    {
-      comments[uid] = currentComment;
-    }
-    setComments(comments);
+    writePost(currentComment);
     setCurrentComment("");
+    getPosts();
+    // PostsRef.set({ uid, today, comment: comments });
   };
-
+  console.log(Object.values(comments));
   return (
     <div className={classes.root}>
       <Nav />
@@ -158,14 +194,12 @@ const Home = () => {
         direction="column"
         alignItems="center"
         justify="space-between"
-        className="test2"
-      >
+        className="test2">
         <Grid
           item
           container
           direction="row"
-          style={{ margin: "1rem auto", padding: "1rem 3rem" }}
-        >
+          style={{ margin: "1rem auto", padding: "1rem 3rem" }}>
           <Typography className={classes.sentence}>
             Today's Date is&nbsp;
             <span className={classes.date}>
@@ -205,8 +239,7 @@ const Home = () => {
                 <Typography
                   key={idx}
                   className={classes.meaning}
-                  display="inline"
-                >
+                  display="inline">
                   {NUM_MAP[day].meaning}
                 </Typography>
               ))}
@@ -224,17 +257,8 @@ const Home = () => {
         <Grid
           item
           container
-          direction="row-reverse"
-          style={{ margin: "1em auto", padding: "1rem" }}
-        >
-          <Grid item xs={12} sm={7}>
-            <Typography variant="h5" align="center">
-              Comments:
-              {comments.map(comment => (
-                <li>{comment}</li>
-              ))}
-            </Typography>
-          </Grid>
+          direction="row"
+          style={{ margin: "1em auto", padding: "1rem" }}>
           <Grid item xs={12} sm={5}>
             <Typography variant="h5" align="center">
               Discussion:
@@ -245,12 +269,41 @@ const Home = () => {
                 fullWidth
                 rows={7}
                 className={classes.input}
-                onChange={handleChange}
-              ></Input>
+                onChange={handleChange}></Input>
               <Button variant="text" fullWidth color="secondary" type="submit">
                 Post
               </Button>
             </form>
+          </Grid>
+          <Grid item xs={12} sm={7}>
+            <Typography variant="h5" align="center">
+              Comments:
+            </Typography>
+            {comments ? (
+              // comments.length > 0 ? (
+              Object.values(comments).map(({ uuid, message }) => (
+                <li>
+                  <img
+                    src={`https://api.adorable.io/avatars/40/${uuid}.pngCopy`}
+                    style={{ borderRadius: "33%" }}
+                    height="40px"
+                    width="40px"
+                  />
+                  <span style={{ padding: "0 1rem", verticalAlign: "center" }}>
+                    {message}
+                  </span>
+                </li>
+              ))
+            ) : (
+              // ) : (
+              //   <Typography variant="h4" align="center">
+              //     No Comments today.
+              //   </Typography>
+              // )
+              <Typography variant="h4" align="center">
+                Loading...
+              </Typography>
+            )}
           </Grid>
         </Grid>
       </Grid>
