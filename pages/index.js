@@ -1,97 +1,83 @@
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
-
-import { postsUpdate, postsFetch } from "../db/fsdb";
-
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
-  Container,
   Typography,
   LinearProgress,
   Input,
   Button
 } from "@material-ui/core";
 import { format } from "date-fns";
-import ReactGA from "react-ga";
 
-import Nav from "./../components/nav";
+import Nav from "../src/components/nav";
 
-ReactGA.initialize("UA-12892693-12");
-if (process.browser) {
-  ReactGA.pageview(window.location.pathname + window.location.search);
-}
-
-const CHAR_MAP = {
-  A: { value: 1, meaning: "Allah" },
-  J: { value: 1, meaning: "Justice" },
-  S: { value: 1, meaning: "Self/Savior/Sovereign" },
-  B: { value: 2, meaning: "Be/Born" },
-  K: { value: 2, meaning: "King/Kingdom" },
-  T: { value: 2, meaning: "Truth/Square" },
-  C: { value: 3, meaning: "Cee" },
-  L: { value: 3, meaning: "Love Hell/Right" },
-  U: { value: 3, meaning: "You/Universe/U-N-I-Verse" },
-  D: { value: 4, meaning: "Divine" },
-  M: { value: 4, meaning: "Master" },
-  V: { value: 4, meaning: "Victory" },
-  E: { value: 5, meaning: "Equality" },
-  N: { value: 5, meaning: "In/Now/Nation" },
-  W: { value: 5, meaning: "Wisom (Woman)" },
-  F: { value: 6, meaning: "Father" },
-  O: { value: 6, meaning: "Cipher" },
-  X: { value: 6, meaning: "Unknown" },
-  G: { value: 7, meaning: "God" },
-  P: { value: 7, meaning: "Power" },
-  Y: { value: 7, meaning: "Why" },
-  H: { value: 8, meaning: "He/Her" },
-  Q: { value: 8, meaning: "Queen" },
-  Z: { value: 8, meaning: "Zig-Zag-Zig" },
-  I: { value: 9, meaning: "I/Islam" },
-  R: { value: 9, meaning: "Rule/Ruler" }
-};
-
-const NUM_MAP = {
-  1: { meaning: "Knowledge" },
-  2: { meaning: "Wisdom" },
-  3: { meaning: "Understanding" },
-  4: { meaning: "Culture/Freedom" },
-  5: { meaning: "Power/Refinement" },
-  6: { meaning: "Equality" },
-  7: { meaning: "God" },
-  8: { meaning: "Build/Destroy" },
-  9: { meaning: "Born" },
-  0: { meaning: "Cipher" }
-};
-
-const getDays = date => {
-  let days = date
-    .getDate()
-    .toString()
-    .split("");
-  return days;
-};
+import { postsUpdate, postsFetch } from "../src/db/fsdb";
+import { NUM_MAP } from "../src/_CONSTANTS";
+import { getDays, genGuid, reduceWord } from "../src/_FUNCTIONS";
+import theme from "../src/styles/theme";
 
 const useStyles = makeStyles({
   root: {
     // background:
     //   "linear-gradient(rgba(240, 0, 255, 0.5), rgba(255, 255, 0, 0.5)), url('img/handEarth.jpg')",
-    height: "100%"
+    height: "100%",
+    position: "relative",
+    padding: theme.spacing(0),
+    margin: theme.spacing(0),
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1rem"
+    },
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1.1rem"
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "1.4rem"
+    }
   },
   date: { color: "#FE6B8B", fontWeight: "bolder" },
-  sentence: { display: "inline", fontSize: "3rem" },
+
+  theMath: {
+    backgroundColor: theme.palette.background.paper,
+    position: "sticky",
+    top: 0,
+    margin: "1rem auto 0",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.3rem",
+      padding: "1rem"
+    },
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1.1rem",
+      padding: "1rem 3rem"
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "3rem",
+      padding: "1rem 3rem"
+    }
+  },
+  sentence: { display: "inline", fontSize: "inherit", lineHeight: "1.8em" },
   meaning: {
+    fontSize: "1.1em",
     display: "inline",
-    margin: "0 .333rem",
-    padding: "0 .333rem",
+    margin: "0 .333em",
+    padding: "0 .333em",
     fontWeight: "bolder",
     display: "inline",
-    fontSize: "3.33rem",
-    boxShadow: "0 .3rem .5rem .3rem rgba(212, 175, 55, .3)"
+    boxShadow: "0 .3em .5em .3em rgba(212, 175, 55, .3)"
   },
   input: {
     fontSize: "24px",
     fontFamily: "cursive, fantasy, oblique"
+  },
+  avatar: {
+    margin: "auto",
+    borderRadius: "33%"
+  },
+  discussion: { padding: "1rem" },
+  form: { background: "rgba(212, 175, 55, .1)", borderRadius: "3%" },
+  comments: {
+    fontFamily: "Cormorant Garamond, serif",
+    lineHeight: "1em",
+    fontSize: "1.2em"
   },
   footer: {
     position: "relative",
@@ -110,14 +96,6 @@ const Home = () => {
     getPosts();
   }, []);
 
-  async function getPosts() {
-    const response = await postsFetch(`${today.getDate()}`);
-    if (response) {
-      setComments(response);
-    } else {
-      setComments([]);
-    }
-  }
   const today = new Date();
   const dateArray = getDays(today); //date split into array
   let dateSum = dateArray.reduce((a, b) => parseInt(a) + parseInt(b), 0); // sum of dateArray elements
@@ -135,18 +113,15 @@ const Home = () => {
   // dateSum > 9
   //   ? dateSum.toString.split("").reduce((a, b) => a + b, 0)
   //   : dateSum;
-  let genGuid = function() {
-    let nav = window.navigator;
-    let screen = window.screen;
-    let guid = nav.mimeTypes.length;
-    guid += nav.userAgent.replace(/\D+/g, "");
-    guid += nav.plugins.length;
-    guid += screen.height || "";
-    guid += screen.width || "";
-    guid += screen.pixelDepth || "";
-    return guid;
-  };
 
+  const getPosts = async () => {
+    const response = await postsFetch(`${today.getDate()}`);
+    if (response) {
+      setComments(response);
+    } else {
+      setComments([]);
+    }
+  };
   const writePost = async message => {
     let data = {};
     let uuid = genGuid();
@@ -157,14 +132,6 @@ const Home = () => {
     post[puid] = message;
     data = { uuid, message };
     let refId = await postsUpdate(duid, data);
-  };
-
-  const reduceWord = word => {
-    let value = Array.from(word).reduce((nameScore, element) => {
-      let curValue = CHAR_MAP[element];
-      return nameScore + curValue;
-    }, 0);
-    return value;
   };
 
   const handleChange = event => {
@@ -185,7 +152,6 @@ const Home = () => {
     getPosts();
     // PostsRef.set({ uid, today, comment: comments });
   };
-  console.log(Object.values(comments));
   return (
     <div className={classes.root}>
       <Nav />
@@ -193,13 +159,13 @@ const Home = () => {
         container
         direction="column"
         alignItems="center"
-        justify="space-between"
-        className="test2">
+        justify="space-between">
         <Grid
           item
           container
           direction="row"
-          style={{ margin: "1rem auto", padding: "1rem 3rem" }}>
+          className={classes.theMath}
+          alignItems="center">
           <Typography className={classes.sentence}>
             Today's Date is&nbsp;
             <span className={classes.date}>
@@ -258,51 +224,52 @@ const Home = () => {
           item
           container
           direction="row"
-          style={{ margin: "1em auto", padding: "1rem" }}>
+          className={classes.discussion}
+          spacing={2}>
           <Grid item xs={12} sm={5}>
-            <Typography variant="h5" align="center">
+            <Typography variant="h5" align="center" gutterBottom>
               Discussion:
             </Typography>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={classes.form}>
               <Input
                 multiline
                 fullWidth
-                rows={7}
+                rows={3}
                 className={classes.input}
                 onChange={handleChange}></Input>
-              <Button variant="text" fullWidth color="secondary" type="submit">
+              <Button
+                variant="contained"
+                fullWidth
+                color="primary"
+                type="submit">
                 Post
               </Button>
             </form>
           </Grid>
           <Grid item xs={12} sm={7}>
-            <Typography variant="h5" align="center">
+            <Typography variant="h5" align="center" gutterBottom>
               Comments:
             </Typography>
             {comments ? (
-              // comments.length > 0 ? (
-              Object.values(comments).map(({ uuid, message }) => (
-                <li>
-                  <img
-                    src={`https://api.adorable.io/avatars/40/${uuid}.pngCopy`}
-                    style={{ borderRadius: "33%" }}
-                    height="40px"
-                    width="40px"
-                  />
-                  <span style={{ padding: "0 1rem", verticalAlign: "center" }}>
-                    {message}
-                  </span>
-                </li>
+              Object.values(comments).map(({ uuid, message }, i) => (
+                <div key={`${uuid}-${i}`} className={classes.comments}>
+                  <Grid container direction="row" alignItems="center">
+                    <Grid item xs={2} md={1}>
+                      <img
+                        src={`https://api.adorable.io/avatars/40/${uuid}.pngCopy`}
+                        className={classes.avatar}
+                        height="43px"
+                        width="43px"
+                      />
+                    </Grid>
+                    <Grid item xs={10} md={11}>
+                      <span>{message}</span>
+                    </Grid>
+                  </Grid>
+                </div>
               ))
             ) : (
-              // ) : (
-              //   <Typography variant="h4" align="center">
-              //     No Comments today.
-              //   </Typography>
-              // )
-              <Typography variant="h4" align="center">
-                Loading...
-              </Typography>
+              <LinearProgress />
             )}
           </Grid>
         </Grid>

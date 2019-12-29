@@ -1,6 +1,7 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/analytics";
 import "firebase/auth/dist/index.cjs";
 import "firebase/database/dist/index.cjs";
 
@@ -16,6 +17,7 @@ const firebaseConfig = {
 };
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
+  firebase.analytics()
 }
 
 const auth = firebase.auth();

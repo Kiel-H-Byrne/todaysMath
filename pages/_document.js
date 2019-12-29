@@ -1,24 +1,24 @@
 import React from "react";
+
 import Document, { Main, NextScript } from "next/document";
 import { ServerStyleSheets } from "@material-ui/styles";
+import ReactGA from "react-ga";
+import Head from "../src/components/head";
 
-import Head from "../components/head";
-import "./../styles/style.scss";
-
-const appSettings = {
-  name: "365 Days of Supreme Math",
-  url: "",
-  imageUrl: "",
-  twitter_handle: "",
-  description: ""
-};
+if (process.browser) {
+  ReactGA.initialize("UA-12892693-12");
+  ReactGA.pageview(window.location.pathname + window.location.search);
+}
 
 class MyDocument extends Document {
   render() {
     return (
       <html lang="en">
-        <Head title="The Supreme Calendar" />
-        <body>
+        <Head />
+        <body
+          style={{
+            margin: 0
+          }}>
           <noscript>You need to enable JavaScript to run this app.</noscript>
 
           <Main />
@@ -27,8 +27,7 @@ class MyDocument extends Document {
           <script
             crossOrigin="true"
             type="text/javascript"
-            src="https://unpkg.com/default-passive-events"
-          ></script>
+            src="https://unpkg.com/default-passive-events"></script>
         </body>
       </html>
     );
@@ -73,10 +72,8 @@ MyDocument.getInitialProps = async ctx => {
     ...initialProps,
     // Styles fragment is rendered after the app and page rendering finish.
     styles: [
-      <React.Fragment key="styles">
-        {initialProps.styles}
-        {sheets.getStyleElement()}
-      </React.Fragment>
+      ...React.Children.toArray(initialProps.styles),
+      sheets.getStyleElement()
     ]
   };
 };
