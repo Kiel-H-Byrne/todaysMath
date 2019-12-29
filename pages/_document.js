@@ -1,5 +1,5 @@
 import React from "react";
-
+import "firebase/analytics";
 import Document, { Main, NextScript } from "next/document";
 import { ServerStyleSheets } from "@material-ui/styles";
 import ReactGA from "react-ga";
@@ -24,6 +24,9 @@ class MyDocument extends Document {
           <Main />
 
           <NextScript />
+          <script async src="https://www.googletagmanager.com/gtag/js">
+            firebase.analytics()
+          </script>
           <script
             crossOrigin="true"
             type="text/javascript"
