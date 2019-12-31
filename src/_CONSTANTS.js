@@ -43,7 +43,7 @@ export const NUM_MAP = {
 export const APP_SETTINGS = {
   name: "365 Day Supreme Calendar",
   url: "https://todaysmath.kielbyrne.com/",
-  imageUrl: "img/FBprev.png",
+  imageUrl: "https://todaysmath.kielbyrne.com/img/FBprev.png",
   twitter_handle: "",
   description: "365 Day Calendar of Supreme Mathematics"
 };
