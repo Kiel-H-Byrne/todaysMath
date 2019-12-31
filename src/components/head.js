@@ -5,13 +5,13 @@ import theme from "../../src/styles/theme";
 
 import { APP_SETTINGS } from "../../src/_CONSTANTS";
 
-export const MyHead = ({ title, description, ogImage, url }) => (
+export const MyHead = () => (
   <Head>
     <meta charSet="utf-8" />
-    <meta
-      name="description"
-      content={description || APP_SETTINGS.defaultDescription}
-    />
+
+    <meta name="title" content={APP_SETTINGS.title} />
+    <meta name="description" content={APP_SETTINGS.description} />
+
     <meta
       name="viewport"
       content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
@@ -22,10 +22,10 @@ export const MyHead = ({ title, description, ogImage, url }) => (
       rel="stylesheet"
     />
 
-    <link rel="icon" sizes="192x192" href="/static/touch-icon.png" />
-    <link rel="apple-touch-icon" href="/static/touch-icon.png" />
-    <link rel="mask-icon" href="/static/favicon-mask.svg" color="#49B882" />
-    <link rel="icon" href="/static/favicon.ico" />
+    <link rel="icon" sizes="192x192" href="`img/touch-icon.png" />
+    <link rel="apple-touch-icon" href="img/touch-icon.png" />
+    <link rel="mask-icon" href="img/favicon-mask.svg" color="#49B882" />
+    <link rel="icon" href="img/favicon.ico" />
     <link
       rel="manifest"
       type="application/manifest+json"
@@ -34,23 +34,19 @@ export const MyHead = ({ title, description, ogImage, url }) => (
     <link rel="stylesheet" type="text/css" href="../styles/App.css" />
     <meta name="theme-color" content={theme.palette.primary.main} />
 
-    <meta property="og:url" content={url || APP_SETTINGS.defaultOGURL} />
-    <meta property="og:title" content={title || ""} />
-    <meta
-      property="og:description"
-      content={description || APP_SETTINGS.defaultDescription}
-    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={APP_SETTINGS.url} />
+    <meta property="og:title" content={APP_SETTINGS.title} />
+    <meta property="og:description" content={APP_SETTINGS.description} />
+    <meta property="og:image" content={APP_SETTINGS.imageUrl} />
 
-    <meta name="twitter:site" content={url || APP_SETTINGS.defaultOGURL} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:image"
-      content={ogImage || APP_SETTINGS.defaultOGImage}
-    />
-    <meta
-      property="og:image"
-      content={ogImage || APP_SETTINGS.defaultOGImage}
-    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={APP_SETTINGS.url} />
+    <meta property="twitter:title" content={APP_SETTINGS.title} />
+    <meta property="twitter:description" content={APP_SETTINGS.description} />
+    <meta property="twitter:image" content={APP_SETTINGS.imageUrl} />
+
+    <meta name="twitter:site" content={APP_SETTINGS.url} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
   </Head>

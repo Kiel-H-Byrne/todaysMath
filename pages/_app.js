@@ -3,6 +3,8 @@ import App from "next/app";
 import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+
+import { APP_SETTINGS } from "./../src/_CONSTANTS";
 import theme from "../src/styles/theme";
 
 export default class MyApp extends App {
@@ -20,7 +22,7 @@ export default class MyApp extends App {
     return (
       <React.Fragment>
         <Head>
-          <title>The Supreme Calendar</title>
+          <title>{APP_SETTINGS.title}</title>
         </Head>
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
