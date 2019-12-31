@@ -3,8 +3,6 @@
 @import "./frames";
 @import "./colors";
 
-@import url("https://fonts.googleapis.com/css?family=Cormorant+Garamond|Fira+Sans|Quicksand&display=swap");
-
 @include breakpoint(phablet) {
   // $drawerWidth: 640px;
 }

@@ -1,16 +1,22 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 // import "./_colors.scss";
 
+//google fonts
+// font-family: 'Just Another Hand', cursive;
+// font-family: 'Merienda', cursive;
+// font-family: 'Quicksand', sans-serif;
+// font-family: 'Cormorant Garamond', serif;
+
 // Create a theme instance.
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "rgb(128, 138, 33)",
-      light: "rgb(255, 255, 00)",
-      dark: "rgb(109, 89, 0)"
+      main: "rgba(255,215,0, .8)",
+      light: "rgba(255, 215, 105, .8)",
+      dark: "rgb(109, 89, 0, .7)"
     },
     secondary: {
-      main: "rgb(252,252,240)",
+      main: "rgb(25,21,0)",
       light: "",
       dark: ""
     },

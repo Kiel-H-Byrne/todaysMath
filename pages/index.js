@@ -35,7 +35,7 @@ const useStyles = makeStyles({
     }
   },
   date: { color: "#FE6B8B", fontWeight: "bolder" },
-
+  dateNumber: { color: theme.palette.action.default },
   theMath: {
     backgroundColor: theme.palette.background.paper,
     position: "sticky",
@@ -62,11 +62,11 @@ const useStyles = makeStyles({
     padding: "0 .333em",
     fontWeight: "bolder",
     display: "inline",
-    boxShadow: "0 .3em .5em .3em rgba(212, 175, 55, .3)"
+    textShadow: `.3em .3em .2em ${theme.palette.primary.light}`
   },
   input: {
     fontSize: "24px",
-    fontFamily: "cursive, fantasy, oblique"
+    fontFamily: "Just Another Hand, cursive"
   },
   avatar: {
     margin: "auto",
@@ -169,7 +169,8 @@ const Home = () => {
           <Typography className={classes.sentence}>
             Today's Date is&nbsp;
             <span className={classes.date}>
-              {format(today, "EEEE, MMMM 'the' do")}
+              {`${format(today, "EEEE, MMMM")} the `}
+              <span className={classes.dateNumber}>{format(today, "do")}</span>
             </span>
             ,&nbsp;
           </Typography>

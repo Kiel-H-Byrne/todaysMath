@@ -13,11 +13,11 @@ const links = [
     href:
       "//genius.com/Nation-of-gods-and-earths-supreme-mathematics-annotated",
     label: "Supreme Math \n Information"
-  },
-  {
-    href: "//linkedin.com/in/kielbyrne",
-    label: "About Me"
   }
+  // {
+  //   href: "//linkedin.com/in/kielbyrne",
+  //   label: "About Me"
+  // }
 ].map(link => {
   link.key = `nav-link-${link.href}-${link.label}`;
   return link;
@@ -54,7 +54,7 @@ const useStyles = makeStyles({
   },
   button: {
     [theme.breakpoints.down("sm")]: {
-      fontSize: ".8rem"
+      fontSize: "1.5em"
     },
     [theme.breakpoints.up("sm")]: {
       fontSize: "1.1rem"
@@ -69,7 +69,7 @@ const Nav = () => {
   const classes = useStyles();
 
   return (
-    <AppBar position="static" color="secondary" className={classes.root}>
+    <AppBar position="static" color="default" className={classes.root}>
       <Toolbar disableGutters>
         <Grid container direction="row">
           <Grid item>
@@ -92,7 +92,7 @@ const Nav = () => {
                 <a target="_blank" rel="noopener" className={classes.link}>
                   <Button
                     variant="text"
-                    color="primary"
+                    color="secondary"
                     className={classes.button}>
                     {label}
                   </Button>

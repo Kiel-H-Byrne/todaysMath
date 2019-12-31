@@ -18,9 +18,10 @@ export const MyHead = ({ title, description, ogImage, url }) => (
     />
 
     <link
-      href="https://fonts.googleapis.com/css?family=Cormorant+Garamond|Fira+Sans|Quicksand&display=swap"
+      href="https://fonts.googleapis.com/css?family=Cormorant+Garamond|Just+Another+Hand|Merienda|Quicksand&display=swap"
       rel="stylesheet"
     />
+
     <link rel="icon" sizes="192x192" href="/static/touch-icon.png" />
     <link rel="apple-touch-icon" href="/static/touch-icon.png" />
     <link rel="mask-icon" href="/static/favicon-mask.svg" color="#49B882" />
