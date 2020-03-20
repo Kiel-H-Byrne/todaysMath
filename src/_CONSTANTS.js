@@ -40,13 +40,11 @@ exports.NUM_MAP = {
     9: { meaning: "Born" },
     0: { meaning: "Cipher" }
 };
-exports.APP_SETTINGS = {
-    name: "365 Days of Supreme Math",
-    url: "",
-    imageUrl: "",
-    twitter_handle: "",
-    description: "",
-    defaultDescription: "",
-    defaultOGURL: "",
-    defaultOGImage: ""
+
+export const APP_SETTINGS = {
+  name: "365 Day Supreme Calendar",
+  url: "https://todaysmath.kielbyrne.com/",
+  imageUrl: "https://todaysmath.kielbyrne.com/img/FBprev.png",
+  twitter_handle: "",
+  description: "365 Day Calendar of Supreme Mathematics"
 };

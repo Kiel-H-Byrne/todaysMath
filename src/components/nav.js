@@ -6,16 +6,16 @@ import theme from "../styles/theme";
 
 const links = [
   {
-    href: "//en.wikipedia.org/wiki/Five-Percent_Nation",
+    href: "https://en.wikipedia.org/wiki/Five-Percent_Nation",
     label: "NGE \n Information"
   },
   {
     href:
-      "//genius.com/Nation-of-gods-and-earths-supreme-mathematics-annotated",
+      "https://genius.com/Nation-of-gods-and-earths-supreme-mathematics-annotated",
     label: "Supreme Math \n Information"
   }
   // {
-  //   href: "//linkedin.com/in/kielbyrne",
+  //   href: "https://linkedin.com/in/kielbyrne",
   //   label: "About Me"
   // }
 ].map(link => {
@@ -93,7 +93,8 @@ const Nav = () => {
                   <Button
                     variant="text"
                     color="secondary"
-                    className={classes.button}>
+                    className={classes.button}
+                  >
                     {label}
                   </Button>
                 </a>
