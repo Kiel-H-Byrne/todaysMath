@@ -1,15 +1,19 @@
-import React from "react";
-import { Head } from "next/document";
-import { string } from "prop-types";
-import theme from "../../src/styles/theme";
+import React from "react"
+import { Head } from "next/document"
+import theme from "../../src/styles/theme"
 
-import { APP_SETTINGS } from "../../src/_CONSTANTS";
-
-export const MyHead = () => (
+import { APP_SETTINGS } from "../../src/_CONSTANTS"
+type IMyHead = {
+  title: string
+  description: string
+  url: string
+  ogImage: string
+}
+export const MyHead = (props: IMyHead) => (
   <Head>
     <meta charSet="utf-8" />
 
-    <meta name="title" content={APP_SETTINGS.title} />
+    <meta name="title" content={APP_SETTINGS.name} />
     <meta name="description" content={APP_SETTINGS.description} />
 
     <meta
@@ -36,13 +40,13 @@ export const MyHead = () => (
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={APP_SETTINGS.url} />
-    <meta property="og:title" content={APP_SETTINGS.title} />
+    <meta property="og:title" content={APP_SETTINGS.name} />
     <meta property="og:description" content={APP_SETTINGS.description} />
     <meta property="og:image" content={APP_SETTINGS.imageUrl} />
 
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={APP_SETTINGS.url} />
-    <meta property="twitter:title" content={APP_SETTINGS.title} />
+    <meta property="twitter:title" content={APP_SETTINGS.name} />
     <meta property="twitter:description" content={APP_SETTINGS.description} />
     <meta property="twitter:image" content={APP_SETTINGS.imageUrl} />
 
@@ -50,13 +54,6 @@ export const MyHead = () => (
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
   </Head>
-);
+)
 
-MyHead.propTypes = {
-  title: string,
-  description: string,
-  url: string,
-  ogImage: string
-};
-
-export default MyHead;
+export default MyHead

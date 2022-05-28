@@ -5,16 +5,16 @@ import {
   Typography,
   LinearProgress,
   Input,
-  Button
-} from "@material-ui/core";
-import { format } from "date-fns";
+  Button,
+} from "@material-ui/core"
 
-import Nav from "../src/components/nav";
+import Nav from "../src/components/nav"
 
-import { postsUpdate, postsFetch } from "../src/db/fsdb";
-import { NUM_MAP } from "../src/_CONSTANTS";
-import { getDays, genGuid, reduceWord } from "../src/_FUNCTIONS";
-import theme from "../src/styles/theme";
+import { postsUpdate, postsFetch } from "../src/db/fsdb"
+import { NUM_MAP } from "../src/_CONSTANTS"
+import { getDays, nth, reduceWord } from "../src/_FUNCTIONS"
+import theme from "../src/styles/theme"
+import { nanoid } from "nanoid"
 
 const useStyles = makeStyles({
   root: {
@@ -25,14 +25,14 @@ const useStyles = makeStyles({
     padding: theme.spacing(0),
     margin: theme.spacing(0),
     [theme.breakpoints.down("sm")]: {
-      fontSize: "1rem"
+      fontSize: "1rem",
     },
     [theme.breakpoints.up("sm")]: {
-      fontSize: "1.1rem"
+      fontSize: "1.1rem",
     },
     [theme.breakpoints.up("lg")]: {
-      fontSize: "1.4rem"
-    }
+      fontSize: "1.4rem",
+    },
   },
   date: { color: "#FE6B8B", fontWeight: "bolder" },
   dateNumber: { color: theme.palette.action.default },
@@ -43,16 +43,16 @@ const useStyles = makeStyles({
     margin: "1rem auto 0",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.3rem",
-      padding: "1rem"
+      padding: "1rem",
     },
     [theme.breakpoints.up("sm")]: {
       fontSize: "1.1rem",
-      padding: "1rem 3rem"
+      padding: "1rem 3rem",
     },
     [theme.breakpoints.up("lg")]: {
       fontSize: "3rem",
-      padding: "1rem 3rem"
-    }
+      padding: "1rem 3rem",
+    },
   },
   sentence: { display: "inline", fontSize: "inherit", lineHeight: "1.8em" },
   meaning: {
@@ -62,47 +62,52 @@ const useStyles = makeStyles({
     padding: "0 .333em",
     fontWeight: "bolder",
     display: "inline",
-    textShadow: `.3em .3em .2em ${theme.palette.primary.light}`
+    textShadow: `.3em .3em .2em ${theme.palette.primary.light}`,
   },
   input: {
     fontSize: "24px",
-    fontFamily: "Just Another Hand, cursive"
+    fontFamily: "Just Another Hand, cursive",
   },
   avatar: {
     margin: "auto",
-    borderRadius: "33%"
+    borderRadius: "33%",
   },
   discussion: { padding: "1rem" },
   form: { background: "rgba(212, 175, 55, .1)", borderRadius: "3%" },
   comments: {
     fontFamily: "Cormorant Garamond, serif",
     lineHeight: "1em",
-    fontSize: "1.2em"
+    fontSize: "1.2em",
   },
   footer: {
     position: "relative",
-    bottom: 0
-  }
-});
+    bottom: 0,
+  },
+})
 
 const Home = () => {
   // const [name, setName] = useState(""); //user name from input
   // const [score, setScore] = useState(0); //the end value of adding name values.
-  const [currentComment, setCurrentComment] = useState("");
-  const [comments, setComments] = useState([]);
-  const classes = useStyles();
+  const [currentComment, setCurrentComment] = useState("")
+  const [comments, setComments] = useState([])
+  const classes = useStyles()
 
   useEffect(() => {
-    getPosts();
-  }, []);
+    getPosts()
+  }, [])
 
-  const today = new Date();
-  const dateArray = getDays(today); //date split into array
-  let dateSum = dateArray.reduce((a, b) => parseInt(a) + parseInt(b), 0); // sum of dateArray elements
-  let sumArray = dateSum > 9 ? Array.from(dateSum.toString()) : null; //dateSum split into array of two numbers
+  const today = new Date()
+  const todayString = today.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  }) //'Saturday, May 28'
+  const dateArray = getDays(today) //date split into array
+  let dateSum = dateArray.reduce((a, b) => parseInt(a) + parseInt(b), 0) // sum of dateArray elements
+  let sumArray = dateSum > 9 ? Array.from(dateSum.toString()) : null //dateSum split into array of two numbers
   let sumSum = sumArray // sum of sumArray elements
     ? sumArray.reduce((a, b) => parseInt(a) + parseInt(b), 0)
-    : null;
+    : null
   // console.log({ today, dateArray, dateSum, sumArray, sumSum });
   // today's date is a number.
   // if the number is greater than 9 (or has two digits), add those numbers up.
@@ -115,43 +120,50 @@ const Home = () => {
   //   : dateSum;
 
   const getPosts = async () => {
-    const response = await postsFetch(`${today.getDate()}`);
+    const response = await postsFetch(`${today.getDate()}`)
     if (response) {
-      setComments(response);
+      setComments(response)
     } else {
-      setComments([]);
+      setComments([])
     }
-  };
-  const writePost = async message => {
-    let data = {};
-    let uuid = genGuid();
-    let date = new Date();
-    let duid = `${date.getDate()}`;
-    let puid = new Date().getMilliseconds();
-    let post = {};
-    post[puid] = message;
-    data = { uuid, message };
-    let refId = await postsUpdate(duid, data);
-  };
+  }
+  const writePost = async (message) => {
+    let data = {}
+    let uuid = nanoid()
+    if (window.localStorage && window.localStorage.getItem("KBTM_UID")) {
+      uuid = window.localStorage.getItem("KBTM_UID")
+    } else {
+      window.localStorage.setItem("KBBTM_UID", uuid)
+    }
+    window.localStorage && !window.localStorage.getItem("")
+    let date = new Date()
+    let duid = `${date.getDate()}`
+    let puid = new Date().getMilliseconds()
+    let post = {}
+    post[puid] = message
+    data = { uuid, message }
+    let refId = await postsUpdate(duid, data)
+  }
 
-  const handleChange = event => {
-    event.preventDefault();
-    setCurrentComment(event.target.value);
-  };
+  const handleChange = (event) => {
+    event.preventDefault()
+    setCurrentComment(event.target.value)
+  }
 
-  const handleChange2 = event => {
-    setName(event.target.value);
-    let value = reduceWord(event.target.value);
-    setScore(value);
-  };
+  const handleChange2 = (event) => {
+    setName(event.target.value)
+    let value = reduceWord(event.target.value)
+    setScore(value)
+  }
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    writePost(currentComment);
-    setCurrentComment("");
-    getPosts();
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    writePost(currentComment)
+    setCurrentComment("")
+    getPosts()
     // PostsRef.set({ uid, today, comment: comments });
-  };
+  }
+
   return (
     <div className={classes.root}>
       <Nav />
@@ -159,18 +171,22 @@ const Home = () => {
         container
         direction="column"
         alignItems="center"
-        justify="space-between">
+        justify="space-between"
+      >
         <Grid
           item
           container
           direction="row"
           className={classes.theMath}
-          alignItems="center">
+          alignItems="center"
+        >
           <Typography className={classes.sentence}>
             Today's Date is&nbsp;
             <span className={classes.date}>
-              {`${format(today, "EEEE, MMMM")} the `}
-              <span className={classes.dateNumber}>{format(today, "do")}</span>
+              {`${todayString.match(/\w*[^\d]/g).join("")}the `}
+              <span className={classes.dateNumber}>
+                {`${new Date().getDate()}${nth(new Date().getDate())}`}
+              </span>
             </span>
             ,&nbsp;
           </Typography>
@@ -179,10 +195,9 @@ const Home = () => {
           </Typography>
           {dateArray.map((day, idx) => (
             <Typography key={idx} className={classes.meaning} display="inline">
-              {NUM_MAP[day].meaning}
+              {NUM_MAP[day].meaning}({day})
             </Typography>
           ))}
-
           {// DATE HAS TWO DIGITS? ADD THEM AND SHOW COMPONENT
           dateSum < 10 && dateArray.length > 1 ? (
             <React.Fragment>
@@ -191,7 +206,7 @@ const Home = () => {
                 all being born to&nbsp;
               </Typography>
               <Typography className={classes.meaning} display="inline">
-                {NUM_MAP[dateSum].meaning}
+                {NUM_MAP[dateSum].meaning}({day})
               </Typography>
             </React.Fragment>
           ) : null}
@@ -206,7 +221,8 @@ const Home = () => {
                 <Typography
                   key={idx}
                   className={classes.meaning}
-                  display="inline">
+                  display="inline"
+                >
                   {NUM_MAP[day].meaning}
                 </Typography>
               ))}
@@ -226,7 +242,8 @@ const Home = () => {
           container
           direction="row"
           className={classes.discussion}
-          spacing={2}>
+          spacing={2}
+        >
           <Grid item xs={12} sm={5}>
             <Typography variant="h5" align="center" gutterBottom>
               Discussion:
@@ -237,12 +254,14 @@ const Home = () => {
                 fullWidth
                 rows={3}
                 className={classes.input}
-                onChange={handleChange}></Input>
+                onChange={handleChange}
+              ></Input>
               <Button
                 variant="contained"
                 fullWidth
                 color="primary"
-                type="submit">
+                type="submit"
+              >
                 Post
               </Button>
             </form>
@@ -276,7 +295,7 @@ const Home = () => {
         </Grid>
       </Grid>
     </div>
-  );
-};
+  )
+}
 
 export default Home;
