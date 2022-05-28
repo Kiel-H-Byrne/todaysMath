@@ -8,15 +8,13 @@
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/styles": "latest",
-    "date-fns": "^2.7.0",
-    "firebase": "^7.6.0",
+    "firebase": "^9.8.2",
     "next": "^12.1.0",
-    "next-offline": "^4.0.6",
+    "next-offline": "^5.0.5",
     "node-sass": "^7.0.0",
-    "prop-types": "latest",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-ga": "^2.7.0"
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-ga": "^3.3.0"
   },
   "devDependencies": {
     "postcss-css-variables": "^0.14.0",

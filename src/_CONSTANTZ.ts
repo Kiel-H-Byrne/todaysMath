@@ -41,12 +41,37 @@ export const NUM_MAP = {
 };
 
 export const APP_SETTINGS = {
-  name: "365 Days of Supreme Math",
-  url: "",
-  imageUrl: "",
-  twitter_handle: "",
-  description: "",
-  defaultDescription: "",
-  defaultOGURL: "",
-  defaultOGImage: ""
-};
+         name: "365 Day Supreme Calendar",
+         url: "https://todaysmath.kielbyrne.com/",
+         imageUrl: "https://todaysmath.kielbyrne.com/img/FBprev.png",
+         twitter_handle: "",
+         description: "365 Day Calendar of Supreme Mathematics",
+         defaultDescription: "",
+         defaultOGURL: "",
+         defaultOGImage: "",
+       }
+
+let daysArray = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+]
+
+let monthsArray = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+]
