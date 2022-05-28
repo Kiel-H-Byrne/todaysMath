@@ -8,18 +8,19 @@
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/styles": "latest",
-    "firebase": "^9.8.2",
+    "date-fns": "^2.7.0",
+    "firebase": "^7.6.0",
     "next": "^12.1.0",
-    "next-offline": "^5.0.5",
+    "next-offline": "^4.0.6",
     "node-sass": "^7.0.0",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "react-ga": "^3.3.0"
+    "prop-types": "latest",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-ga": "^2.7.0"
   },
   "devDependencies": {
     "postcss-css-variables": "^0.14.0",
     "prettier": "^1.19.1",
-    "nanoid": "^3.3.3",
     "typescript": "^3.8.3"
   }
 }
