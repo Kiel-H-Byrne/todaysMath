@@ -5,6 +5,7 @@ export const getDays = date => {
     .getDate()
     .toString()
     .split("");
+  console.log(days)
   return days;
 };
 

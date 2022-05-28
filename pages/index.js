@@ -13,8 +13,9 @@ import Nav from "../src/components/nav";
 
 import { postsUpdate, postsFetch } from "../src/db/fsdb";
 import { NUM_MAP } from "../src/_CONSTANTS";
-import { getDays, genGuid, reduceWord } from "../src/_FUNCTIONS";
+import { getDays, reduceWord } from "../src/_FUNCTIONS"
 import theme from "../src/styles/theme";
+import { nanoid } from "nanoid"
 
 const useStyles = makeStyles({
   root: {
@@ -124,7 +125,7 @@ const Home = () => {
   };
   const writePost = async message => {
     let data = {};
-    let uuid = genGuid();
+    let uuid = nanoid()
     let date = new Date();
     let duid = `${date.getDate()}`;
     let puid = new Date().getMilliseconds();

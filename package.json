@@ -21,6 +21,7 @@
   "devDependencies": {
     "postcss-css-variables": "^0.14.0",
     "prettier": "^1.19.1",
+    "nanoid": "^3.3.3",
     "typescript": "^3.8.3"
   }
 }
