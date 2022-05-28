@@ -12,7 +12,7 @@ import Nav from "../src/components/nav"
 
 import { postsUpdate, postsFetch } from "../src/db/fsdb"
 import { NUM_MAP } from "../src/_CONSTANTS"
-import { getDays, reduceWord } from "../src/_FUNCTIONS"
+import { getDays, nth, reduceWord } from "../src/_FUNCTIONS"
 import theme from "../src/styles/theme"
 import { nanoid } from "nanoid"
 
@@ -157,12 +157,12 @@ const Home = () => {
   }
 
   const handleSubmit = (event) => {
-                                    event.preventDefault()
-                                    writePost(currentComment)
-                                    setCurrentComment("")
-                                    getPosts()
-                                    // PostsRef.set({ uid, today, comment: comments });
-                                  }
+    event.preventDefault()
+    writePost(currentComment)
+    setCurrentComment("")
+    getPosts()
+    // PostsRef.set({ uid, today, comment: comments });
+  }
 
   return (
     <div className={classes.root}>
@@ -185,7 +185,7 @@ const Home = () => {
             <span className={classes.date}>
               {`${todayString.match(/\w*[^\d]/g).join("")}the `}
               <span className={classes.dateNumber}>
-                {todayString.match(/\d+/g)}
+                {`${new Date().getDate()}${nth(new Date().getDate())}`}
               </span>
             </span>
             ,&nbsp;
@@ -195,10 +195,9 @@ const Home = () => {
           </Typography>
           {dateArray.map((day, idx) => (
             <Typography key={idx} className={classes.meaning} display="inline">
-              {NUM_MAP[day].meaning}
+              {NUM_MAP[day].meaning}({day})
             </Typography>
           ))}
-
           {// DATE HAS TWO DIGITS? ADD THEM AND SHOW COMPONENT
           dateSum < 10 && dateArray.length > 1 ? (
             <React.Fragment>
@@ -207,7 +206,7 @@ const Home = () => {
                 all being born to&nbsp;
               </Typography>
               <Typography className={classes.meaning} display="inline">
-                {NUM_MAP[dateSum].meaning}
+                {NUM_MAP[dateSum].meaning}({day})
               </Typography>
             </React.Fragment>
           ) : null}
