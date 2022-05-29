@@ -4,9 +4,16 @@ export const getDays = (date) => {
   let days = date
     .getDate()
     .toString()
+<<<<<<< HEAD
     .split("")
   return days
 }
+=======
+    .split("");
+  console.log(days)
+  return days;
+};
+>>>>>>> origin/main
 
 export const genGuid = () => {
   // let nav = window.navigator;

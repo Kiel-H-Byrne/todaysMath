@@ -1,6 +1,5 @@
 import React from "react"
 import { Head } from "next/document"
-
 type IMyHead = {
   title: string
   description: string
