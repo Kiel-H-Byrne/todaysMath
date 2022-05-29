@@ -1,9 +1,6 @@
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
-import "firebase/analytics";
-import "firebase/auth/dist/index.cjs";
-import "firebase/database/dist/index.cjs";
+import { initializeApp, getApps, getApp } from "firebase/app"
+import { getAuth, useDeviceLanguage } from "firebase/auth"
+import { initializeFirestore } from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyBTUtMRd68roYbhf1yYIZLSpwCD8NWpnrE",
@@ -13,15 +10,11 @@ const firebaseConfig = {
   storageBucket: "todaysmath-5d0e8.appspot.com",
   messagingSenderId: "1015189715065",
   appId: "1:1015189715065:web:bae89322e120772910bca8",
-  measurementId: "G-SQY8ZPMQV7"
-};
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-  // firebase.analytics()
+  measurementId: "G-SQY8ZPMQV7",
 }
-
-const auth = firebase.auth();
-auth.useDeviceLanguage;
-const fsdb = firebase.firestore();
-
-export { auth, fsdb };
+// if (!getApps().length) {
+const todaysMathApp = initializeApp(firebaseConfig)
+const fsdb = initializeFirestore(todaysMathApp, {})
+// }
+useDeviceLanguage(getAuth())
+export { todaysMathApp, fsdb }

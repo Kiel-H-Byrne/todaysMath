@@ -1,12 +1,14 @@
 // import * as firebase from "firebase/app"
 // import "firebase/firestore"
 
-import firebase, { fsdb } from "./firebase"
+import { collection, doc, getDoc, setDoc } from "firebase/firestore"
+import { fsdb } from "./firebase"
 
 // import * as ACTIONS from "./../Actions/actionConstants";
 //UID
 // import uuidv4 from "uuid/v4";
-const postsCollection = fsdb.collection("POSTS")
+const postsRef = collection(fsdb, "POSTS")
+const docRef = doc(postsRef, new Date().getDate().toString())
 
 // const watchCollection = function(collection, ...filters) {
 
@@ -49,7 +51,7 @@ const postsCollection = fsdb.collection("POSTS")
 // };
 
 // const unWatchCollection = function(filter){
-//   fsdb.collection(filter)
+//   collection(filter)
 //     .onSnapshot(function () {});
 // }
 
@@ -76,135 +78,26 @@ const postsCollection = fsdb.collection("POSTS")
 // };
 
 // const unWatchDocument = function(filter, id){
-//   fsdb.collection(filter)
+//   collection(filter)
 //     .doc(id)
 //     .onSnapshot(function () {});
 // }
 
 // == POSTS == //
-const postsCreate = function(duid, data) {
+
+const postCreate = async function(data) {
   console.log("submitting to db...", data)
-  let ref = postsCollection.doc(duid)
-  return ref
-    .set({ ...data, _id: ref.id }, (error) => {
-      if (error) {
-        return error
-      } else {
-        return ref.id
-      }
-    })
-    .then(() => ref.id)
-    .catch((error) => error)
+
+  await setDoc(docRef, data, { merge: true })
 }
 
-const postsFetch = function(date) {
-  let docRef = postsCollection.doc(date)
-
-  return docRef
-    .get()
-    .then(function(doc) {
-      if (doc.exists) {
-        // console.log("Document data:", doc.data());
-        return doc.data()
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!")
-        return null
-      }
-    })
-    .catch(function(error) {
-      console.log("Error getting document:", error)
-    })
+const postsFetch = async function(query) {
+  const docRef = doc(postsRef, query)
+  const docSnap = await getDoc(docRef)
+  return docSnap.exists() && docSnap.data()
 }
-
-const postsFetchAll = function() {
-  //return {"postId": {postData}}
-  return postsCollection
-    .get()
-    .then((querySnapshot) => {
-      let docs = {}
-      querySnapshot.forEach((doc) => {
-        docs[doc.id] = doc.data()
-      })
-      return docs
-    })
-    .catch((error) => {
-      console.log(error)
-      return error
-    })
-}
-
-const postsFetchOne = function(uid) {
-  let doc = {}
-  return uid
-    ? postsCollection
-        .doc(uid)
-        .get()
-        .then((docSnapshot) => {
-          doc[docSnapshot.id] = docSnapshot.data()
-          return doc
-        })
-        .catch((error) => {
-          console.log(error)
-          return error
-        })
-    : null
-}
-const postsfetchWhere = function(param, query) {
-  query = query || ""
-  console.log(param, query)
-  return postsCollection
-    .where(param, "==", query)
-    .get()
-    .then((snapshot) => {
-      let objects = []
-      if (snapshot.empty) {
-        console.log("no matching documents")
-        return objects
-      }
-      snapshot.forEach((doc) => {
-        let obj = { _id: doc.id, ...doc.data() }
-        objects = [...objects, obj]
-      })
-      return objects
-    })
-    .catch((err) => {
-      console.log("Error", err)
-    })
-}
-
-const postsUpdate = function(duid, data) {
-                                           // A post entry.
-
-                                           let dateRef = postsCollection.doc(
-                                             duid,
-                                           )
-                                           let messages = {}
-                                           messages[data.uuid] = data
-                                           dateRef.set(messages, {
-                                             merge: true,
-                                           })
-
-                                           // dateRef.update({
-                                           //   messages: firestore.FieldValue.arrayUnion(postData)
-                                           // })
-                                         }
 
 const postsDelete = function(uid) {}
-
-export const submitPost = function(duid, data) {
-  let post = {}
-  post[duid] = data
-  return postsCollection
-    .add(post)
-    .then((docRef) => {
-      return docRef.id
-    })
-    .catch((error) => {
-      console.log(error)
-      return error
-    })
-}
 
 // export const getMyPosts = (uid, dispatch) => {
 //   // eslint-disable-next-line
@@ -227,12 +120,4 @@ export const submitPost = function(duid, data) {
 //   });
 // };
 
-export {
-  postsCreate,
-  postsFetchOne,
-  postsFetch,
-  postsFetchAll,
-  postsfetchWhere,
-  postsDelete,
-  postsUpdate,
-}
+export { postCreate, postsFetch, postsDelete }

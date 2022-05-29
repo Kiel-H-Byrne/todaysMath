@@ -10,8 +10,8 @@ import {
 
 import Nav from "../src/components/nav"
 
-import { postsUpdate, postsFetch } from "../src/db/fsdb"
-import { NUM_MAP } from "../src/_CONSTANTS"
+import { postsUpdate, postCreate, postsFetch } from "../src/db/fsdb"
+import { NUM_MAP } from "../src/_CONSTANTZ"
 import { getDays, nth, reduceWord } from "../src/_FUNCTIONS"
 import theme from "../src/styles/theme"
 import { nanoid } from "nanoid"
@@ -141,8 +141,9 @@ const Home = () => {
     let puid = new Date().getMilliseconds()
     let post = {}
     post[puid] = message
-    data = { uuid, message }
-    let refId = await postsUpdate(duid, data)
+    data = { [uuid]: { message, timestamp: new Date().getTime() } }
+    // let refId = await postsUpdate(duid, data)
+    let refId = await postCreate(data)
   }
 
   const handleChange = (event) => {
@@ -195,7 +196,7 @@ const Home = () => {
           </Typography>
           {dateArray.map((day, idx) => (
             <Typography key={idx} className={classes.meaning} display="inline">
-              {NUM_MAP[day].meaning}({day})
+              {NUM_MAP[day].meaning} ({day})
             </Typography>
           ))}
           {// DATE HAS TWO DIGITS? ADD THEM AND SHOW COMPONENT
@@ -206,7 +207,7 @@ const Home = () => {
                 all being born to&nbsp;
               </Typography>
               <Typography className={classes.meaning} display="inline">
-                {NUM_MAP[dateSum].meaning}({day})
+                {NUM_MAP[dateSum].meaning} ({day})
               </Typography>
             </React.Fragment>
           ) : null}
@@ -223,7 +224,7 @@ const Home = () => {
                   className={classes.meaning}
                   display="inline"
                 >
-                  {NUM_MAP[day].meaning}
+                  {NUM_MAP[day].meaning} ({day})
                 </Typography>
               ))}
               <span className={classes.sentence}>&mdash;</span>
@@ -231,7 +232,7 @@ const Home = () => {
                 all being born to&nbsp;
               </Typography>
               <Typography className={classes.meaning} display="inline">
-                {NUM_MAP[sumSum].meaning}
+                {NUM_MAP[sumSum].meaning} ({sumSum})
               </Typography>
             </React.Fragment>
           ) : null}
@@ -267,30 +268,33 @@ const Home = () => {
             </form>
           </Grid>
           <Grid item xs={12} sm={7}>
-            <Typography variant="h5" align="center" gutterBottom>
-              Comments:
-            </Typography>
-            {comments ? (
-              Object.values(comments).map(({ uuid, message }, i) => (
-                <div key={`${uuid}-${i}`} className={classes.comments}>
-                  <Grid container direction="row" alignItems="center">
-                    <Grid item xs={2} md={1}>
-                      <img
-                        src={`https://api.adorable.io/avatars/40/${uuid}.pngCopy`}
-                        className={classes.avatar}
-                        height="43px"
-                        width="43px"
-                      />
-                    </Grid>
-                    <Grid item xs={10} md={11}>
-                      <span>{message}</span>
-                    </Grid>
-                  </Grid>
-                </div>
-              ))
+            {!comments && <LinearProgress />}
+            {comments.length == 0 ? (
+              <Typography variant="h5" align="center" gutterBottom>
+                "No Comments Today"
+              </Typography>
             ) : (
-              <LinearProgress />
+              <Typography variant="h5" align="center" gutterBottom>
+                Comments:
+              </Typography>
             )}
+            {Object.values(comments).map(({ uuid, message }, i) => (
+              <div key={`${uuid}-${i}`} className={classes.comments}>
+                <Grid container direction="row" alignItems="center">
+                  <Grid item xs={2} md={1}>
+                    <img
+                      src={`https://adorable-avatars.broken.services/40/${uuid}.pngCopy`}
+                      className={classes.avatar}
+                      height="43px"
+                      width="43px"
+                    />
+                  </Grid>
+                  <Grid item xs={10} md={11}>
+                    <span>{message}</span>
+                  </Grid>
+                </Grid>
+              </div>
+            ))}
           </Grid>
         </Grid>
       </Grid>
