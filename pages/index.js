@@ -10,8 +10,8 @@ import {
 
 import Nav from "../src/components/nav"
 
-import { postsUpdate, postsFetch } from "../src/db/fsdb"
-import { NUM_MAP } from "../src/_CONSTANTS"
+import { postsUpdate, postCreate, postsFetch } from "../src/db/fsdb"
+import { NUM_MAP } from "../src/_CONSTANTZ"
 import { getDays, nth, reduceWord } from "../src/_FUNCTIONS"
 import theme from "../src/styles/theme"
 import { nanoid } from "nanoid"
@@ -141,8 +141,9 @@ const Home = () => {
     let puid = new Date().getMilliseconds()
     let post = {}
     post[puid] = message
-    data = { uuid, message }
-    let refId = await postsUpdate(duid, data)
+    data = { [uuid]: { message, timestamp: new Date().getTime() } }
+    // let refId = await postsUpdate(duid, data)
+    let refId = await postCreate(data)
   }
 
   const handleChange = (event) => {

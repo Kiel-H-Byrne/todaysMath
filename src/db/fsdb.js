@@ -1,12 +1,23 @@
 // import * as firebase from "firebase/app"
 // import "firebase/firestore"
 
-import firebase, { fsdb } from "./firebase"
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  Query,
+  query,
+  setDoc,
+} from "firebase/firestore"
+import { fsdb } from "./firebase"
 
 // import * as ACTIONS from "./../Actions/actionConstants";
 //UID
 // import uuidv4 from "uuid/v4";
-const postsCollection = fsdb.collection("POSTS")
+const postsRef = collection(fsdb, "POSTS")
+const docRef = doc(postsRef, new Date().getDate().toString())
 
 // const watchCollection = function(collection, ...filters) {
 
@@ -49,7 +60,7 @@ const postsCollection = fsdb.collection("POSTS")
 // };
 
 // const unWatchCollection = function(filter){
-//   fsdb.collection(filter)
+//   collection(filter)
 //     .onSnapshot(function () {});
 // }
 
@@ -76,15 +87,15 @@ const postsCollection = fsdb.collection("POSTS")
 // };
 
 // const unWatchDocument = function(filter, id){
-//   fsdb.collection(filter)
+//   collection(filter)
 //     .doc(id)
 //     .onSnapshot(function () {});
 // }
 
 // == POSTS == //
-const postsCreate = function(duid, data) {
+const _postsCreate = function(duid, data) {
   console.log("submitting to db...", data)
-  let ref = postsCollection.doc(duid)
+  let ref = doc(postsRef, duid)
   return ref
     .set({ ...data, _id: ref.id }, (error) => {
       if (error) {
@@ -96,10 +107,20 @@ const postsCreate = function(duid, data) {
     .then(() => ref.id)
     .catch((error) => error)
 }
+const postCreate = async function(data) {
+  console.log("submitting to db...", data)
 
-const postsFetch = function(date) {
-  let docRef = postsCollection.doc(date)
+  await setDoc(docRef, data, { merge: true })
+}
 
+const postsFetch = async function(query) {
+  const docRef = doc(postsRef, query)
+  const docSnap = await getDoc(docRef)
+  return docSnap.exists() && docSnap.data()
+}
+
+const _postsFetch = function(date) {
+  let docRef = doc(postsRef, date)
   return docRef
     .get()
     .then(function(doc) {
@@ -119,7 +140,7 @@ const postsFetch = function(date) {
 
 const postsFetchAll = function() {
   //return {"postId": {postData}}
-  return postsCollection
+  return postsRef
     .get()
     .then((querySnapshot) => {
       let docs = {}
@@ -137,7 +158,7 @@ const postsFetchAll = function() {
 const postsFetchOne = function(uid) {
   let doc = {}
   return uid
-    ? postsCollection
+    ? postsRef
         .doc(uid)
         .get()
         .then((docSnapshot) => {
@@ -153,7 +174,7 @@ const postsFetchOne = function(uid) {
 const postsfetchWhere = function(param, query) {
   query = query || ""
   console.log(param, query)
-  return postsCollection
+  return postsRef
     .where(param, "==", query)
     .get()
     .then((snapshot) => {
@@ -174,28 +195,26 @@ const postsfetchWhere = function(param, query) {
 }
 
 const postsUpdate = function(duid, data) {
-                                           // A post entry.
+  // A post entry.
 
-                                           let dateRef = postsCollection.doc(
-                                             duid,
-                                           )
-                                           let messages = {}
-                                           messages[data.uuid] = data
-                                           dateRef.set(messages, {
-                                             merge: true,
-                                           })
+  let dateRef = doc(postsRef, duid)
+  let messages = {}
+  messages[data.uuid] = data
+  dateRef.set(messages, {
+    merge: true,
+  })
 
-                                           // dateRef.update({
-                                           //   messages: firestore.FieldValue.arrayUnion(postData)
-                                           // })
-                                         }
+  // dateRef.update({
+  //   messages: firestore.FieldValue.arrayUnion(postData)
+  // })
+}
 
 const postsDelete = function(uid) {}
 
 export const submitPost = function(duid, data) {
   let post = {}
   post[duid] = data
-  return postsCollection
+  return postsRef
     .add(post)
     .then((docRef) => {
       return docRef.id
@@ -228,7 +247,7 @@ export const submitPost = function(duid, data) {
 // };
 
 export {
-  postsCreate,
+  postCreate,
   postsFetchOne,
   postsFetch,
   postsFetchAll,
