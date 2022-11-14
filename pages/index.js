@@ -170,7 +170,7 @@ const Home = () => {
         container
         direction="column"
         alignItems="center"
-        justify="space-between"
+        justifyContent="space-between"
       >
         <Grid
           item

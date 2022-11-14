@@ -74,37 +74,38 @@ const Nav = () => {
         <Grid container direction="row">
           <Grid item>
             <Link href="/">
-              <a>
-                <img
-                  height="53px"
-                  width="53px"
-                  src="https://i.pinimg.com/originals/76/55/0c/76550cdb7a2de95138746d536e99c7ae.png"
-                  alt="Nation of Gods &amp; Earths"
-                  title="Nation of Gods &amp; Earths"
-                  className={classes.avatar}
-                />
-              </a>
+              <img
+                height="53px"
+                width="53px"
+                src="https://i.pinimg.com/originals/76/55/0c/76550cdb7a2de95138746d536e99c7ae.png"
+                alt="Nation of Gods &amp; Earths"
+                title="Nation of Gods &amp; Earths"
+                className={classes.avatar}
+              />
             </Link>
           </Grid>
           {links.map(({ key, href, label }) => (
             <Grid item key={key}>
-              <Link href={href}>
-                <a target="_blank" rel="noopener" className={classes.link}>
-                  <Button
-                    variant="text"
-                    color="secondary"
-                    className={classes.button}
-                  >
-                    {label}
-                  </Button>
-                </a>
+              <Link
+                href={href}
+                target="_blank"
+                rel="noopener"
+                className={classes.link}
+              >
+                <Button
+                  variant="text"
+                  color="secondary"
+                  className={classes.button}
+                >
+                  {label}
+                </Button>
               </Link>
             </Grid>
           ))}
         </Grid>
       </Toolbar>
     </AppBar>
-  );
+  )
 };
 
 export default Nav;
