@@ -4,7 +4,7 @@ import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-import { APP_SETTINGS } from "./../src/_CONSTANTZ"
+import { APP_SETTINGS } from "../src/_CONSTANTZ"
 import theme from "../src/styles/theme"
 
 export default class MyApp extends App {
