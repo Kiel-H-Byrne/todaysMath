@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "ES6",
     "module": "esnext",
     "strict": true,
     "esModuleInterop": true,
@@ -17,7 +17,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
   },
   "exclude": [
     "node_modules"
