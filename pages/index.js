@@ -10,7 +10,7 @@ import {
 
 import Nav from "../src/components/nav"
 
-import { postsUpdate, postCreate, postsFetch } from "../src/db/fsdb"
+import { postCreate, postsFetch } from "../src/db/fsdb"
 import { NUM_MAP } from "../src/_CONSTANTZ"
 import { getDays, nth, reduceWord } from "../src/_FUNCTIONS"
 import theme from "../src/styles/theme"
@@ -162,9 +162,7 @@ const Home = () => {
     writePost(currentComment)
     setCurrentComment("")
     getPosts()
-    // PostsRef.set({ uid, today, comment: comments });
   }
-
   return (
     <div className={classes.root}>
       <Nav />
@@ -196,7 +194,7 @@ const Home = () => {
           </Typography>
           {dateArray.map((day, idx) => (
             <Typography key={idx} className={classes.meaning} display="inline">
-              {NUM_MAP[day].meaning} ({day})
+              {`${NUM_MAP[day].meaning} (${day})`}
             </Typography>
           ))}
           {// DATE HAS TWO DIGITS? ADD THEM AND SHOW COMPONENT
@@ -207,7 +205,7 @@ const Home = () => {
                 all being born to&nbsp;
               </Typography>
               <Typography className={classes.meaning} display="inline">
-                {NUM_MAP[dateSum].meaning} ({day})
+                {`${NUM_MAP[dateSum].meaning} (${dateSum})`}
               </Typography>
             </React.Fragment>
           ) : null}
@@ -224,7 +222,7 @@ const Home = () => {
                   className={classes.meaning}
                   display="inline"
                 >
-                  {NUM_MAP[day].meaning} ({day})
+                  {`${NUM_MAP[day].meaning} (${day})`}
                 </Typography>
               ))}
               <span className={classes.sentence}>&mdash;</span>
@@ -232,7 +230,7 @@ const Home = () => {
                 all being born to&nbsp;
               </Typography>
               <Typography className={classes.meaning} display="inline">
-                {NUM_MAP[sumSum].meaning} ({sumSum})
+                {`${NUM_MAP[sumSum].meaning} (${sumSum})`}
               </Typography>
             </React.Fragment>
           ) : null}
