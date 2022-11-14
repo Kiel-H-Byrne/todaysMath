@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import * as React from "react"
+import { makeStyles } from "@material-ui/core/styles"
 import {
   Grid,
   Typography,
@@ -10,11 +10,12 @@ import {
 
 import Nav from "../src/components/nav"
 
-import { postsUpdate, postCreate, postsFetch } from "../src/db/fsdb"
+import { Post, postCreate, postsFetch } from "../src/db/fsdb"
 import { NUM_MAP } from "../src/_CONSTANTZ"
 import { getDays, nth, reduceWord } from "../src/_FUNCTIONS"
 import theme from "../src/styles/theme"
 import { nanoid } from "nanoid"
+import { DocumentData } from "firebase/firestore"
 
 const useStyles = makeStyles({
   root: {
@@ -89,7 +90,7 @@ const Home = () => {
   // const [name, setName] = useState(""); //user name from input
   // const [score, setScore] = useState(0); //the end value of adding name values.
   const [currentComment, setCurrentComment] = useState("")
-  const [comments, setComments] = useState([])
+  const [comments, setComments] = useState([] as DocumentData)
   const classes = useStyles()
 
   useEffect(() => {
@@ -127,7 +128,7 @@ const Home = () => {
       setComments([])
     }
   }
-  const writePost = async (message) => {
+  const writePost = async (message: string) => {
     let data = {}
     let uuid = nanoid()
     if (window.localStorage && window.localStorage.getItem("KBTM_UID")) {
@@ -139,32 +140,31 @@ const Home = () => {
     let date = new Date()
     let duid = `${date.getDate()}`
     let puid = new Date().getMilliseconds()
-    let post = {}
+    let post = {} as Post
     post[puid] = message
     data = { [uuid]: { message, timestamp: new Date().getTime() } }
     // let refId = await postsUpdate(duid, data)
     let refId = await postCreate(data)
   }
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     event.preventDefault()
     setCurrentComment(event.target.value)
   }
 
-  const handleChange2 = (event) => {
-    setName(event.target.value)
-    let value = reduceWord(event.target.value)
-    setScore(value)
-  }
+  // const handleChange2 = (event) => {
+  //   setName(event.target.value)
+  //   let value = reduceWord(event.target.value)
+  //   setScore(value)
+  // }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault()
     writePost(currentComment)
     setCurrentComment("")
     getPosts()
     // PostsRef.set({ uid, today, comment: comments });
   }
-
   return (
     <div className={classes.root}>
       <Nav />
@@ -302,4 +302,4 @@ const Home = () => {
   )
 }
 
-export default Home;
+export default Home

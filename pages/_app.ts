@@ -1,8 +1,7 @@
-import React from "react";
-import App from "next/app";
-import Head from "next/head";
-import { ThemeProvider } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import React from "react"
+import App from "next/app"
+import { ThemeProvider } from "@material-ui/core/styles"
+import CssBaseline from "@material-ui/core/CssBaseline"
 
 import { APP_SETTINGS } from "./../src/_CONSTANTZ"
 import theme from "../src/styles/theme"
