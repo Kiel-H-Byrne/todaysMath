@@ -1,38 +1,39 @@
-// import Router from 'next/router';
-// import { auth, rtdb } from './firebase';
+import Router from "next/router"
+import { auth, fsdb } from "./firebase"
+import { disableNetwork } from "firebase/firestore"
 
-// import * as ACTIONS from './../Actions/actionConstants';
-// import * as ROUTES from './../Routes'
+import { ROUTES } from "./../routes"
 
-// export const doCreateUserWithEmailAndPassword = (email, password) =>
-//   auth.createUserWithEmailAndPassword(email, password);
+export const doCreateUserWithEmailAndPassword = (email, password) =>
+  auth.createUserWithEmailAndPassword(email, password)
 
-// // Sign In
-// export const doSignInWithEmailAndPassword = (email, password) =>
-//   auth.signInWithEmailAndPassword(email, password);
+// Sign In
+export const doSignInWithEmailAndPassword = (email, password) =>
+  auth.signInWithEmailAndPassword(email, password)
 
-// export const doSignInWithPhone = phoneNumber =>
-//   auth.signInWithPhoneNumber(phoneNumber);
+export const doSignInWithPhone = (phoneNumber) =>
+  auth.signInWithPhoneNumber(phoneNumber)
 
-// // Sign out
-// export const doLogOut = dispatch => {
-//   rtdb.goOffline();
-//   auth.signOut();
-//   dispatch({
-//     type: ACTIONS.RESET_APP
-//   });
-//   dispatch({
-//     type: ACTIONS.RESET_USERS
-//   });
-//   dispatch({
-//     type: ACTIONS.RESET_FORMS
-//   });
-//   Router.push(ROUTES.LANDING);
-// };
+// Sign out
+export const doLogOut = (dispatch) => {
+  disableNetwork(fsdb)
 
-// // Password Reset
-// export const doPasswordReset = email => auth.sendPasswordResetEmail(email);
+  auth.signOut()
+  dispatch({
+    // type: ACTIONS.RESET_APP,
+  })
+  dispatch({
+    // type: ACTIONS.RESET_USERS,
+  })
+  dispatch({
+    // type: ACTIONS.RESET_FORMS,
+  })
+  Router.push(ROUTES.LANDING)
+}
 
-// // Password Change
-// export const doPasswordUpdate = password =>
-//   auth.currentUser.updatePassword(password);
+// Password Reset
+export const doPasswordReset = (email) => auth.sendPasswordResetEmail(email)
+
+// Password Change
+export const doPasswordUpdate = (password) =>
+  auth.currentUser.updatePassword(password)

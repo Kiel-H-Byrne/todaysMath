@@ -27,12 +27,11 @@ const theme = createTheme({
       default: "rgba(255,255,255, 1)",
     },
     action: {
-      default: "#a065ff",
+      active: "#a065ff",
     },
     grey: {
-      main: "rgba(133,133,133, 0.53)",
-      light: "",
-      dark: "rgb(155,161,123)",
+      50: "rgba(133,133,133, 0.53)",
+      100: "rgb(155,161,123)",
     },
   },
 })

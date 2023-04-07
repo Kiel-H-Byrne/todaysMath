@@ -1,10 +1,16 @@
-import { CHAR_MAP } from "./_CONSTANTZ"
+import {
+  CHAR_MAP,
+  LETTER_MEANINGS,
+  SINGLE_DIGITS,
+  SingleLetters,
+} from "./_CONSTANTZ"
 
 export const getDays = (date: Date) => {
   let days = date
     .getDate()
     .toString()
     .split("")
+    .map((d) => Number(d) as SINGLE_DIGITS)
   return days
 }
 
@@ -21,13 +27,16 @@ export const genGuid = () => {
   let guid = "df"
   return guid
 }
-export const reduceWord = (word: string) => {
-  let value = Array.from(word).reduce((nameScore, element) => {
-    let curValue = CHAR_MAP[element]
-    return nameScore + curValue
-  }, 0)
-  return value
-}
+// export const reduceWord = (word: string) => {
+//   let value = Array.from(word).reduce(
+//     (nameScore: number, singleLetter: SingleLetters) => {
+//       let curValue = CHAR_MAP[singleLetter]
+//       return nameScore + curValue
+//     },
+//     0,
+//   )
+//   return value
+// }
 
 export const nth = function(d: number) {
   if (d > 3 && d < 21) return "th"

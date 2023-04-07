@@ -11,8 +11,8 @@ import {
 import Nav from "../src/components/nav"
 
 import { Post, postCreate, postsFetch } from "../src/db/fsdb"
-import { NUM_MAP } from "../src/_CONSTANTZ"
-import { getDays, nth, reduceWord } from "../src/_FUNCTIONS"
+import { NUM_MAP, SINGLE_DIGITS } from "../src/_CONSTANTZ"
+import { getDays, nth } from "../src/_FUNCTIONS"
 import theme from "../src/styles/theme"
 import { nanoid } from "nanoid"
 import { DocumentData } from "firebase/firestore"
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
     },
   },
   date: { color: "#FE6B8B", fontWeight: "bolder" },
-  dateNumber: { color: theme.palette.action.default },
+  dateNumber: { color: theme.palette.action.active },
   theMath: {
     backgroundColor: theme.palette.background.paper,
     position: "sticky",
@@ -62,7 +62,6 @@ const useStyles = makeStyles({
     margin: "0 .333em",
     padding: "0 .333em",
     fontWeight: "bolder",
-    display: "inline",
     textShadow: `.3em .3em .2em ${theme.palette.primary.light}`,
   },
   input: {
@@ -89,11 +88,11 @@ const useStyles = makeStyles({
 const Home = () => {
   // const [name, setName] = useState(""); //user name from input
   // const [score, setScore] = useState(0); //the end value of adding name values.
-  const [currentComment, setCurrentComment] = useState("")
-  const [comments, setComments] = useState([] as DocumentData)
+  const [currentComment, setCurrentComment] = React.useState("")
+  const [comments, setComments] = React.useState([] as DocumentData)
   const classes = useStyles()
 
-  useEffect(() => {
+  React.useEffect(() => {
     getPosts()
   }, [])
 
@@ -104,10 +103,15 @@ const Home = () => {
     day: "numeric",
   }) //'Saturday, May 28'
   const dateArray = getDays(today) //date split into array
-  let dateSum = dateArray.reduce((a, b) => parseInt(a) + parseInt(b), 0) // sum of dateArray elements
-  let sumArray = dateSum > 9 ? Array.from(dateSum.toString()) : null //dateSum split into array of two numbers
+  let dateSum = (dateArray.reduce(
+    (a, b) => a + b,
+    0,
+  ) as number) as SINGLE_DIGITS // sum of dateArray elements
+  const isSingleDigitSum = dateSum < 10 && dateArray.length > 1
+  let sumArray: SINGLE_DIGITS[] | null =
+    dateSum > 9 ? Array.from(dateSum.toString()).map((s) => parseInt(s)) : null //dateSum split into array of two numbers
   let sumSum = sumArray // sum of sumArray elements
-    ? sumArray.reduce((a, b) => parseInt(a) + parseInt(b), 0)
+    ? ((sumArray.reduce((a, b) => a + b, 0) as number) as SINGLE_DIGITS)
     : null
   // console.log({ today, dateArray, dateSum, sumArray, sumSum });
   // today's date is a number.
@@ -132,7 +136,7 @@ const Home = () => {
     let data = {}
     let uuid = nanoid()
     if (window.localStorage && window.localStorage.getItem("KBTM_UID")) {
-      uuid = window.localStorage.getItem("KBTM_UID")
+      uuid = window.localStorage.getItem("KBTM_UID")!
     } else {
       window.localStorage.setItem("KBBTM_UID", uuid)
     }
@@ -141,7 +145,7 @@ const Home = () => {
     let duid = `${date.getDate()}`
     let puid = new Date().getMilliseconds()
     let post = {} as Post
-    post[puid] = message
+    post[puid].message = message
     data = { [uuid]: { message, timestamp: new Date().getTime() } }
     // let refId = await postsUpdate(duid, data)
     let refId = await postCreate(data)
@@ -172,7 +176,7 @@ const Home = () => {
         container
         direction="column"
         alignItems="center"
-        justify="space-between"
+        justifyContent="space-between"
       >
         <Grid
           item
@@ -184,7 +188,7 @@ const Home = () => {
           <Typography className={classes.sentence}>
             Today's Date is&nbsp;
             <span className={classes.date}>
-              {`${todayString.match(/\w*[^\d]/g).join("")}the `}
+              {`${todayString.match(/\w*[^\d]/g)?.join("")}the `}
               <span className={classes.dateNumber}>
                 {`${new Date().getDate()}${nth(new Date().getDate())}`}
               </span>
@@ -200,14 +204,14 @@ const Home = () => {
             </Typography>
           ))}
           {// DATE HAS TWO DIGITS? ADD THEM AND SHOW COMPONENT
-          dateSum < 10 && dateArray.length > 1 ? (
+          isSingleDigitSum ? (
             <React.Fragment>
               <span className={classes.sentence}>&mdash;</span>
               <Typography className={classes.sentence} display="inline">
                 all being born to&nbsp;
               </Typography>
               <Typography className={classes.meaning} display="inline">
-                {NUM_MAP[dateSum].meaning} ({day})
+                {NUM_MAP[dateSum].meaning} ({dateSum})
               </Typography>
             </React.Fragment>
           ) : null}
@@ -231,9 +235,11 @@ const Home = () => {
               <Typography className={classes.sentence} display="inline">
                 all being born to&nbsp;
               </Typography>
-              <Typography className={classes.meaning} display="inline">
-                {NUM_MAP[sumSum].meaning} ({sumSum})
-              </Typography>
+              {sumSum && (
+                <Typography className={classes.meaning} display="inline">
+                  {NUM_MAP[sumSum].meaning} ({sumSum})
+                </Typography>
+              )}
             </React.Fragment>
           ) : null}
         </Grid>

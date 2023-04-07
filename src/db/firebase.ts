@@ -1,5 +1,5 @@
 import { initializeApp, getApps, getApp } from "firebase/app"
-import { getAuth, useDeviceLanguage } from "firebase/auth"
+import { getAuth, initializeAuth, useDeviceLanguage } from "firebase/auth"
 import { initializeFirestore } from "firebase/firestore"
 
 const firebaseConfig = {
@@ -15,6 +15,7 @@ const firebaseConfig = {
 // if (!getApps().length) {
 const todaysMathApp = initializeApp(firebaseConfig)
 const fsdb = initializeFirestore(todaysMathApp, {})
+const auth = initializeAuth(todaysMathApp)
 // }
 useDeviceLanguage(getAuth())
-export { todaysMathApp, fsdb }
+export { auth, todaysMathApp, fsdb }
