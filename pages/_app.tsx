@@ -1,11 +1,17 @@
-import React, { useEffect } from "react"
+import React, { PropsWithChildren, useEffect } from "react"
 import Head from "next/head"
 import { ThemeProvider } from "@material-ui/core/styles"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import { APP_SETTINGS } from "../src/_CONSTANTZ"
 import theme from "../src/styles/theme"
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({
+  Component,
+  pageProps,
+}: {
+  Component: React.FC<PropsWithChildren>
+  pageProps: PropsWithChildren
+}) {
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side")

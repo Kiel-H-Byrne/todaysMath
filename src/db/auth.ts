@@ -4,36 +4,36 @@ import { disableNetwork } from "firebase/firestore"
 
 import { ROUTES } from "./../routes"
 
-export const doCreateUserWithEmailAndPassword = (email, password) =>
-  auth.createUserWithEmailAndPassword(email, password)
+// export const doCreateUserWithEmailAndPassword = (email, password) =>
+//   auth.createUserWithEmailAndPassword(email, password)
 
-// Sign In
-export const doSignInWithEmailAndPassword = (email, password) =>
-  auth.signInWithEmailAndPassword(email, password)
+// // Sign In
+// export const doSignInWithEmailAndPassword = (email, password) =>
+//   auth.signInWithEmailAndPassword(email, password)
 
-export const doSignInWithPhone = (phoneNumber) =>
-  auth.signInWithPhoneNumber(phoneNumber)
+// export const doSignInWithPhone = (phoneNumber) =>
+//   auth.signInWithPhoneNumber(phoneNumber)
 
 // Sign out
-export const doLogOut = (dispatch) => {
+export const doLogOut = (dispatch: ({ type: string }) => void) => {
   disableNetwork(fsdb)
 
   auth.signOut()
   dispatch({
-    // type: ACTIONS.RESET_APP,
+    type: "reset", //ACTIONS.RESET_APP,
   })
   dispatch({
-    // type: ACTIONS.RESET_USERS,
+    type: "reset_users", //ACTIONS.RESET_USERS,
   })
   dispatch({
-    // type: ACTIONS.RESET_FORMS,
+    type: "reset_forms", //ACTIONS.RESET_FORMS,
   })
   Router.push(ROUTES.LANDING)
 }
 
 // Password Reset
-export const doPasswordReset = (email) => auth.sendPasswordResetEmail(email)
+// export const doPasswordReset = (email) => auth.sendPasswordResetEmail(email)
 
 // Password Change
-export const doPasswordUpdate = (password) =>
-  auth.currentUser.updatePassword(password)
+// export const doPasswordUpdate = (password) =>
+//   auth.currentUser.updatePassword(password)

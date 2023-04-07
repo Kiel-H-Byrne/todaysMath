@@ -31,38 +31,38 @@ const theme = createTheme({
     },
     grey: {
       50: "rgba(133,133,133, 0.53)",
-      100: "rgb(155,161,123)",
+      900: "rgb(155,161,123)",
     },
   },
 })
 
 export const darkTheme = createTheme({
-         palette: {
-           primary: {
-             main: "rgb(0, 158, 88)",
-             light: "rgb(98, 188, 118)",
-             dark: "rgb(29, 109, 19)",
-           },
-           secondary: {
-             main: "rgb(192,192,192)",
-             light: "",
-             dark: "",
-           },
-           error: {
-             main: "#E7453E",
-           },
-           background: {
-             default: "#F9F9F9",
-             paper: "",
-           },
-           action: {
-             default: "#a065ff",
-           },
-           grey: {
-             light: "",
-             dark: "",
-           },
-         },
-       })
+  palette: {
+    primary: {
+      main: "rgb(0, 158, 88)",
+      light: "rgb(98, 188, 118)",
+      dark: "rgb(29, 109, 19)",
+    },
+    secondary: {
+      main: "rgb(192,192,192)",
+      light: "",
+      dark: "",
+    },
+    error: {
+      main: "#E7453E",
+    },
+    background: {
+      default: "#F9F9F9",
+      paper: "",
+    },
+    action: {
+      active: "#a065ff",
+    },
+    grey: {
+      50: "",
+      900: "",
+    },
+  },
+})
 
 export default theme

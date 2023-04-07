@@ -4,6 +4,7 @@ import Document, { Html, Main, NextScript } from "next/document"
 import { ServerStyleSheets } from "@material-ui/styles"
 import ReactGA from "react-ga"
 import Head from "../src/components/head"
+import { APP_SETTINGS } from "../src/_CONSTANTZ"
 
 ReactGA.initialize("UA-12892693-12")
 if (process.browser) {
@@ -14,7 +15,12 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head />
+        <Head
+          title={APP_SETTINGS.name}
+          description={APP_SETTINGS.description}
+          ogImage={APP_SETTINGS.defaultOGImage}
+          url={APP_SETTINGS.url}
+        />
         <body
           style={{
             margin: 0,
