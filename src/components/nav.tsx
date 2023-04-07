@@ -1,8 +1,11 @@
 import React from "react"
 import Link from "next/link"
-import { GridList, Grid, Button, Toolbar, AppBar } from "@material-ui/core"
+import { Grid, Button, Toolbar, AppBar } from "@material-ui/core"
 import { makeStyles } from "@material-ui/styles"
 import theme from "../styles/theme"
+import Login from "./Login"
+import AvatarProfile from "./Avatar"
+import { useAuth } from "../db/auth"
 
 const links = [
   {
@@ -69,7 +72,7 @@ const useStyles = makeStyles({
 
 const Nav = () => {
   const classes = useStyles()
-
+  const { user } = useAuth()
   return (
     <AppBar position="static" color="default" className={classes.root}>
       <Toolbar disableGutters>
@@ -104,6 +107,7 @@ const Nav = () => {
             </Grid>
           ))}
         </Grid>
+        {user ? <AvatarProfile /> : <Login />}
       </Toolbar>
     </AppBar>
   )

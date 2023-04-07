@@ -16,6 +16,10 @@ import { getDays, nth } from "../src/_FUNCTIONS"
 import theme from "../src/styles/theme"
 import { nanoid } from "nanoid"
 import { DocumentData } from "firebase/firestore"
+import { ChakraProvider } from "@chakra-ui/react"
+import { DiscussionGrid } from "../src/components/DiscussionGrid"
+import CommentsSection from "../src/components/DGrid"
+import { useAuth } from "../src/db/auth"
 
 const useStyles = makeStyles({
   root: {
@@ -133,8 +137,10 @@ const Home = () => {
     }
   }
   const writePost = async (message: string) => {
-    let data = {}
+    let postData = {}
+    const { user } = useAuth()
     let uuid = nanoid()
+    console.log(user)
     if (window.localStorage && window.localStorage.getItem("KBTM_UID")) {
       uuid = window.localStorage.getItem("KBTM_UID")!
     } else {
@@ -145,10 +151,11 @@ const Home = () => {
     let duid = `${date.getDate()}`
     let puid = new Date().getMilliseconds()
     let post = {} as Post
-    post[puid].message = message
-    data = { [uuid]: { message, timestamp: new Date().getTime() } }
+    const msgData = { message, timestamp: new Date().getTime() }
+    postData = { [uuid]: msgData }
+    post[puid] = msgData
     // let refId = await postsUpdate(duid, data)
-    let refId = await postCreate(data)
+    let refId = await postCreate(postData)
   }
 
   const handleChange = (event: any) => {
@@ -171,139 +178,97 @@ const Home = () => {
   }
   return (
     <div className={classes.root}>
-      <Nav />
-      <Grid
-        container
-        direction="column"
-        alignItems="center"
-        justifyContent="space-between"
-      >
+      <ChakraProvider>
+        <Nav />
         <Grid
-          item
           container
-          direction="row"
-          className={classes.theMath}
+          direction="column"
           alignItems="center"
+          justifyContent="space-between"
         >
-          <Typography className={classes.sentence}>
-            Today's Date is&nbsp;
-            <span className={classes.date}>
-              {`${todayString.match(/\w*[^\d]/g)?.join("")}the `}
-              <span className={classes.dateNumber}>
-                {`${new Date().getDate()}${nth(new Date().getDate())}`}
+          <Grid
+            item
+            container
+            direction="row"
+            className={classes.theMath}
+            alignItems="center"
+          >
+            <Typography className={classes.sentence}>
+              Today's Date is&nbsp;
+              <span className={classes.date}>
+                {`${todayString.match(/\w*[^\d]/g)?.join("")}the `}
+                <span className={classes.dateNumber}>
+                  {`${new Date().getDate()}${nth(new Date().getDate())}`}
+                </span>
               </span>
-            </span>
-            ,&nbsp;
-          </Typography>
-          <Typography className={classes.sentence}>
-            making today's Math:&nbsp;
-          </Typography>
-          {dateArray.map((day, idx) => (
-            <Typography key={idx} className={classes.meaning} display="inline">
-              {NUM_MAP[day].meaning} ({day})
+              ,&nbsp;
             </Typography>
-          ))}
-          {// DATE HAS TWO DIGITS? ADD THEM AND SHOW COMPONENT
-          isSingleDigitSum ? (
-            <React.Fragment>
-              <span className={classes.sentence}>&mdash;</span>
-              <Typography className={classes.sentence} display="inline">
-                all being born to&nbsp;
-              </Typography>
-              <Typography className={classes.meaning} display="inline">
-                {NUM_MAP[dateSum].meaning} ({dateSum})
-              </Typography>
-            </React.Fragment>
-          ) : null}
-
-          {// DATE HAS TWO DIGITS? ADD THEM AND SHOW COMPONENT
-          sumArray ? (
-            <React.Fragment>
-              <Typography className={classes.sentence} display="inline">
-                all being born to&nbsp;
-              </Typography>
-              {sumArray.map((day, idx) => (
-                <Typography
-                  key={idx}
-                  className={classes.meaning}
-                  display="inline"
-                >
-                  {NUM_MAP[day].meaning} ({day})
-                </Typography>
-              ))}
-              <span className={classes.sentence}>&mdash;</span>
-              <Typography className={classes.sentence} display="inline">
-                all being born to&nbsp;
-              </Typography>
-              {sumSum && (
-                <Typography className={classes.meaning} display="inline">
-                  {NUM_MAP[sumSum].meaning} ({sumSum})
-                </Typography>
-              )}
-            </React.Fragment>
-          ) : null}
-        </Grid>
-
-        <Grid
-          item
-          container
-          direction="row"
-          className={classes.discussion}
-          spacing={2}
-        >
-          <Grid item xs={12} sm={5}>
-            <Typography variant="h5" align="center" gutterBottom>
-              Discussion:
+            <Typography className={classes.sentence}>
+              making today's Math:&nbsp;
             </Typography>
-            <form onSubmit={handleSubmit} className={classes.form}>
-              <Input
-                multiline
-                fullWidth
-                rows={3}
-                className={classes.input}
-                onChange={handleChange}
-              ></Input>
-              <Button
-                variant="contained"
-                fullWidth
-                color="primary"
-                type="submit"
+            {dateArray.map((day, idx) => (
+              <Typography
+                key={idx}
+                className={classes.meaning}
+                display="inline"
               >
-                Post
-              </Button>
-            </form>
-          </Grid>
-          <Grid item xs={12} sm={7}>
-            {!comments && <LinearProgress />}
-            {comments.length == 0 ? (
-              <Typography variant="h5" align="center" gutterBottom>
-                "No Comments Today"
+                {NUM_MAP[day].meaning} ({day})
               </Typography>
-            ) : (
-              <Typography variant="h5" align="center" gutterBottom>
-                Comments:
-              </Typography>
-            )}
-            {Object.values(comments).map(({ uuid, message }, i) => (
-              <div key={`${uuid}-${i}`} className={classes.comments}>
-                <Grid container direction="row" alignItems="center">
-                  <Grid item xs={2} md={1}>
-                    <img
-                      src={`https://adorable-avatars.broken.services/40/${uuid}.pngCopy`}
-                      className={classes.avatar}
-                      height="43px"
-                      width="43px"
-                    />
-                  </Grid>
-                  <Grid item xs={10} md={11}>
-                    <span>{message}</span>
-                  </Grid>
-                </Grid>
-              </div>
             ))}
+            {// DATE HAS TWO DIGITS? ADD THEM AND SHOW COMPONENT
+            isSingleDigitSum ? (
+              <React.Fragment>
+                <span className={classes.sentence}>&mdash;</span>
+                <Typography className={classes.sentence} display="inline">
+                  all being born to&nbsp;
+                </Typography>
+                <Typography className={classes.meaning} display="inline">
+                  {NUM_MAP[dateSum].meaning} ({dateSum})
+                </Typography>
+              </React.Fragment>
+            ) : null}
+
+            {// DATE HAS TWO DIGITS? ADD THEM AND SHOW COMPONENT
+            sumArray ? (
+              <React.Fragment>
+                <Typography className={classes.sentence} display="inline">
+                  all being born to&nbsp;
+                </Typography>
+                {sumArray.map((day, idx) => (
+                  <Typography
+                    key={idx}
+                    className={classes.meaning}
+                    display="inline"
+                  >
+                    {NUM_MAP[day].meaning} ({day})
+                  </Typography>
+                ))}
+                <span className={classes.sentence}>&mdash;</span>
+                <Typography className={classes.sentence} display="inline">
+                  all being born to&nbsp;
+                </Typography>
+                {sumSum && (
+                  <Typography className={classes.meaning} display="inline">
+                    {NUM_MAP[sumSum].meaning} ({sumSum})
+                  </Typography>
+                )}
+              </React.Fragment>
+            ) : null}
           </Grid>
+
+          <DiscussionGrid
+            comments={comments}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+          />
+          <CommentsSection
+            currentComment={currentComment}
+            comments={comments}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+          />
         </Grid>
-      </Grid>
+      </ChakraProvider>
     </div>
   )
 }

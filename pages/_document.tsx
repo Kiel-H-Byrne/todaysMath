@@ -6,6 +6,7 @@ import ReactGA from "react-ga"
 import Head from "../src/components/head"
 import { APP_SETTINGS } from "../src/_CONSTANTZ"
 
+
 ReactGA.initialize("UA-12892693-12")
 if (process.browser) {
   ReactGA.pageview(window.location.pathname + window.location.search)
@@ -27,7 +28,6 @@ class MyDocument extends Document {
           }}
         >
           <noscript>You need to enable JavaScript to run this app.</noscript>
-
           <Main />
           <NextScript />
           <script async src="https://www.googletagmanager.com/gtag/js">

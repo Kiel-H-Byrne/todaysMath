@@ -4,8 +4,15 @@
 import { collection, doc, getDoc, setDoc } from "firebase/firestore"
 import { fsdb } from "./firebase"
 
+export interface PostShape {
+  message: string
+  timestamp: number
+  userAvatar: string
+  userName: string
+}
+
 export type Post = {
-  [uuid: string]: { message: string; timestamp: number }
+  [uuid: string]: PostShape
 }
 
 // import * as ACTIONS from "./../Actions/actionConstants";
