@@ -1,19 +1,19 @@
 <!--- These are examples. See https://shields.io for others or to customize this set of shields. You might want to include dependencies, project status and license info here --->
 
-![Vercel](https://vercelbadge.vercel.app/kielbyrne/todaysMath)
-![Github License](https://img.shields.io/github/license/tdotholla/todaysMath)
+![Vercel](https://vercelbadge.vercel.app/api/kielbyrne/todaysMath)
+![Github License](https://img.shields.io/github/license/kiel-h-byrne/todaysMath)
 ![Node Version](https://img.shields.io/node/v/canary)
 ![W3C Validation](https://img.shields.io/w3c-validation/default?targetUrl=https%3A%2F%2Ftodaysmath.kielbyrne.com/)
+
+![GitHub repo size](https://img.shields.io/github/repo-size/kiel-h-byrne/todaysMath)
+![Github code size](https://img.shields.io/github/languages/code-size/kiel-h-byrne/todaysMath)
+![Github Languages](https://img.shields.io/github/languages/count/kiel-h-byrne/todaysMath)
+![Github Top Language](https://img.shields.io/github/languages/top/kiel-h-byrne/todaysMath)
 <!--
 
-![GitHub repo size](https://img.shields.io/github/repo-size/tdotholla/todaysMath)
-![Github code size](https://img.shields.io/github/languages/code-size/tdotholla/todaysMath)
-![Github Languages](https://img.shields.io/github/languages/count/tdotholla/todaysMath)
-![Github Top Language](https://img.shields.io/github/languages/top/tdotholla/todaysMath)
-
-![GitHub Issues](https://img.shields.io/github/issues-raw/tdotholla/todaysMath)
-![GitHub contributors](https://img.shields.io/github/contributors/tdotholla/todaysMath)
-![Github Last Commit](https://img.shields.io/github/last-commit/tdotholla/todaysMath)
+![GitHub Issues](https://img.shields.io/github/issues-raw/kiel-h-byrne/todaysMath)
+![GitHub contributors](https://img.shields.io/github/contributors/kiel-h-byrne/todaysMath)
+![Github Last Commit](https://img.shields.io/github/last-commit/kiel-h-byrne/todaysMath)
 
 ![Github Commit Activity](https://img.shields.io/github/commit-activity/m/tdotholla/todaysMath)
 ![GitHub stars](https://img.shields.io/github/stars/tdotholla/todaysMath?style=social)
@@ -23,7 +23,11 @@
 -->
 
 # todaysMath - The Supreme Calendar
-This PWA is a utility to give you the Supreme Mathetmatics for the day.
+This PWA is a utility to give you the Supreme Mathematics for the day; everyday.
+---
+<img width="80%" src="https://github.com/Kiel-H-Byrne/todaysMath/assets/955269/6c3faf35-974d-4807-b235-7b0eef413176" />
+
+---
 
 **_Visit [todaysmath.kielbyrne.com](https://todaysmath.kielbyrne.com/)_**
 
