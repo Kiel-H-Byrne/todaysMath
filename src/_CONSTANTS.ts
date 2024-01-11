@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CHAR_MAP = {
+export const CHAR_MAP = {
     A: { value: 1, meaning: "Allah" },
     J: { value: 1, meaning: "Justice" },
     S: { value: 1, meaning: "Self/Savior/Sovereign" },
@@ -28,7 +26,7 @@ exports.CHAR_MAP = {
     I: { value: 9, meaning: "I/Islam" },
     R: { value: 9, meaning: "Rule/Ruler" }
 };
-exports.NUM_MAP = {
+export const NUM_MAP = {
     1: { meaning: "Knowledge" },
     2: { meaning: "Wisdom" },
     3: { meaning: "Understanding" },

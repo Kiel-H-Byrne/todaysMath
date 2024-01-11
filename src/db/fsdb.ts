@@ -84,20 +84,23 @@ const docRef = doc(postsRef, new Date().getDate().toString())
 // }
 
 // == POSTS == //
+export type IPost = {
+  [uuid: string]: { message: string, timestamp: number}
+}
 
-const postCreate = async function(data) {
+const postCreate = async function(data: IPost) {
   console.log("submitting to db...", data)
 
   await setDoc(docRef, data, { merge: true })
 }
 
-const postsFetch = async function(query) {
+const postsFetch = async function(query: string) {
   const docRef = doc(postsRef, query)
   const docSnap = await getDoc(docRef)
   return docSnap.exists() && docSnap.data()
 }
 
-const postsDelete = function(uid) {}
+const postsDelete = function(uid: string) {}
 
 // export const getMyPosts = (uid, dispatch) => {
 //   // eslint-disable-next-line
@@ -120,4 +123,5 @@ const postsDelete = function(uid) {}
 //   });
 // };
 
-export { postCreate, postsFetch, postsDelete }
+export { postCreate, postsDelete, postsFetch }
+

@@ -1,5 +1,6 @@
 import {
   Button,
+  Container,
   Grid,
   Input,
   LinearProgress,
@@ -8,18 +9,18 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import React, { FormEvent, useEffect, useState } from "react";
 
-
 import { DocumentData } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import { NUM_MAP } from "../src/_CONSTANTZ";
 import { getDays, nth } from "../src/_FUNCTIONS";
-import { postCreate, postsFetch } from "../src/db/fsdb";
+import { IPost, postCreate, postsFetch } from "../src/db/fsdb";
 import theme from "../src/styles/theme";
 
 const useStyles = makeStyles({
   root: {
     // background:
     //   "linear-gradient(rgba(240, 0, 255, 0.5), rgba(255, 255, 0, 0.5)), url('img/handEarth.jpg')",
+    color: "white",
     height: "100%",
     position: "relative",
     padding: theme.spacing(0),
@@ -37,9 +38,9 @@ const useStyles = makeStyles({
   date: { color: "#FE6B8B", fontWeight: "bolder" },
   dateNumber: { color: (theme.palette.action as any).default },
   theMath: {
-    backgroundColor: theme.palette.background.paper,
-    position: "sticky",
-    top: 0,
+    // backgroundColor: theme.palette.background.paper,
+    // position: "sticky",
+    // top: 0,
     margin: "1rem auto 0",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.3rem",
@@ -61,7 +62,7 @@ const useStyles = makeStyles({
     margin: "0 .333em",
     padding: "0 .333em",
     fontWeight: "bolder",
-    textShadow: `.3em .3em .2em ${theme.palette.primary.light}`,
+    textShadow: `.3em .3em .2em ${theme.palette.primary.dark}`,
   },
   input: {
     fontSize: "24px",
@@ -82,31 +83,31 @@ const useStyles = makeStyles({
     position: "relative",
     bottom: 0,
   },
-})
+});
 
 const Home = () => {
   // const [name, setName] = useState(""); //user name from input
   // const [score, setScore] = useState(0); //the end value of adding name values.
-  const [currentComment, setCurrentComment] = useState("")
-  const [comments, setComments] = useState([] as DocumentData)
-  const classes = useStyles()
+  const [currentComment, setCurrentComment] = useState("");
+  const [comments, setComments] = useState([] as DocumentData);
+  const classes = useStyles();
 
   useEffect(() => {
-    getPosts()
-  }, [])
+    getPosts();
+  }, []);
 
-  const today = new Date()
+  const today = new Date();
   const todayString = today.toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",
     day: "numeric",
-  }) //'Saturday, May 28'
-  const dateArray = getDays(today) //date split into array
-  let dateSum = dateArray.map(s => parseInt(s)).reduce((a, b) => a + b, 0) // sum of dateArray elements
-  let sumArray = dateSum > 9 ? Array.from(dateSum.toString()) : [] //dateSum split into array of two numbers
+  }); //'Saturday, May 28'
+  const dateArray = getDays(today); //date split into array
+  let dateSum = dateArray.map((s) => parseInt(s)).reduce((a, b) => a + b, 0); // sum of dateArray elements
+  let sumArray = dateSum > 9 ? Array.from(dateSum.toString()) : []; //dateSum split into array of two numbers
   let sumSum = sumArray // sum of sumArray elements
-    ? sumArray.map(s => parseInt(s)).reduce((a, b) => a + b, 0)
-    : 0
+    ? sumArray.map((s) => parseInt(s)).reduce((a, b) => a + b, 0)
+    : 0;
   // console.log({ today, dateArray, dateSum, sumArray, sumSum });
   // today's date is a number.
   // if the number is greater than 9 (or has two digits), add those numbers up.
@@ -119,33 +120,33 @@ const Home = () => {
   //   : dateSum;
 
   const getPosts = async () => {
-    const response = await postsFetch(`${today.getDate()}`)
+    const response = await postsFetch(`${today.getDate()}`);
     if (response) {
-      setComments(response)
+      setComments(response);
     } else {
-      setComments([])
+      setComments([]);
     }
-  }
+  };
   const writePost = async (message: string) => {
-    let data = {}
-    let uuid = window.localStorage.getItem("KBTM_UID") ?? nanoid()
+    let data: IPost = {};
+    let uuid = window.localStorage.getItem("KBTM_UID") ?? nanoid();
     if (window.localStorage && !window.localStorage.getItem("KBTM_UID")) {
-      window.localStorage.setItem("KBTM_UID", uuid)
+      window.localStorage.setItem("KBTM_UID", uuid);
     }
-    let date = new Date()
-    let duid = `${date.getDate()}`
-    let puid = new Date().getMilliseconds()
-    let post:any = {}
-    post[puid] = message
-    data = { [uuid]: { message, timestamp: new Date().getTime() } }
+    let date = new Date();
+    let duid = `${date.getDate()}`;
+    let puid = new Date().getMilliseconds();
+    let post: any = {};
+    post[puid] = message;
+    data = { [uuid]: { message, timestamp: new Date().getTime() } };
     // let refId = await postsUpdate(duid, data)
-    let refId = await postCreate(data)
-  }
+    let refId = await postCreate(data);
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault()
-    setCurrentComment(event.target.value)
-  }
+    event.preventDefault();
+    setCurrentComment(event.target.value);
+  };
 
   // const handleChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   setName(event.target.value)
@@ -154,19 +155,14 @@ const Home = () => {
   // }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    writePost(currentComment)
-    setCurrentComment("")
-    getPosts()
-  }
+    event.preventDefault();
+    writePost(currentComment);
+    setCurrentComment("");
+    getPosts();
+  };
   return (
     <div className={classes.root}>
-      <Grid
-        container
-        direction="column"
-        alignItems="center"
-        justifyContent="space-between"
-      >
+      <Container maxWidth="xl">
         <Grid
           item
           container
@@ -206,7 +202,7 @@ const Home = () => {
           ) : null}
 
           {// DATE HAS TWO DIGITS? ADD THEM AND SHOW COMPONENT
-          sumArray ? (
+          sumArray.length > 0 ? (
             <React.Fragment>
               <Typography className={classes.sentence} display="inline">
                 all being born to&nbsp;
@@ -236,6 +232,7 @@ const Home = () => {
           container
           direction="row"
           className={classes.discussion}
+          // style={{ border: "1px solid red", borderRadius: 4 }}
           spacing={2}
         >
           <Grid item xs={12} sm={5}>
@@ -249,6 +246,7 @@ const Home = () => {
                 rows={3}
                 className={classes.input}
                 onChange={handleChange}
+                color={"secondary"}
               ></Input>
               <Button
                 variant="contained"
@@ -288,9 +286,9 @@ const Home = () => {
             ))}
           </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </div>
-  )
-}
+  );
+};
 
 export default Home;

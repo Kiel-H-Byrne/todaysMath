@@ -13,6 +13,10 @@ const theme = createTheme({
     // common: {
     //   black:"rgba(133,133,133, 1) "
     // },
+    text: {
+      primary: "rgba(255,255,255, 1)",
+      secondary: "rgba(0,0,0, 1)",
+    },
     primary: {
       main: "rgba(255,215,0, .8)",
       light: "rgba(255, 215, 105, .8)",
@@ -28,7 +32,8 @@ const theme = createTheme({
       light: "#a065ff",
     },
     background: {
-      default: "rgba(255,255,255, 1)",
+      default: "rgba(35,25,05, 1)",
+      paper: "rgba(255,255,255, 1)",
     },
   },
 })

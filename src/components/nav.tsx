@@ -15,16 +15,6 @@ const links = [
     label: "Supreme Math \n Information",
     isExternal: true
   },
-  {
-    href: "https://linkedin.com/in/kielbyrne",
-    label: "About Me",
-    isExternal: true
-  },
-  {
-    href: "/tech-stack",
-    label: "How We Made This Site",
-    isExternal: false
-  }
 ].map(link => {
   return link;
 });
