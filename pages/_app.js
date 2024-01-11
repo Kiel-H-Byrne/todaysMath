@@ -4,6 +4,7 @@ import App from "next/app";
 import Head from "next/head";
 import React from "react";
 import { APP_SETTINGS } from "../src/_CONSTANTZ";
+import Footer from '../src/components/footer';
 import Nav from '../src/components/nav';
 import theme from "../src/styles/theme";
 
@@ -58,6 +59,7 @@ export default class MyApp extends App {
           <CssBaseline />
           <Nav />
           <Component {...pageProps} />
+          <Footer />
         </ThemeProvider>
       </React.Fragment>
     );

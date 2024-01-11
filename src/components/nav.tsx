@@ -75,7 +75,7 @@ const Nav = () => {
   const classes = useStyles();
 
   return (
-    <AppBar position="static" color="default" className={classes.root} >
+    <AppBar position="static" color="primary" className={classes.root} >
       <Toolbar disableGutters>
         <Grid container direction="row" spacing={1}>
           <Grid item>

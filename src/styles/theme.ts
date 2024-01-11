@@ -10,13 +10,16 @@ import { createTheme } from "@material-ui/core/styles"
 // Create a theme instance.
 const theme = createTheme({
   palette: {
+    // common: {
+    //   black:"rgba(133,133,133, 1) "
+    // },
     primary: {
       main: "rgba(255,215,0, .8)",
       light: "rgba(255, 215, 105, .8)",
       dark: "rgb(109, 89, 0, .7)",
     },
     secondary: {
-      main: "rgb(25,21,0)",
+      main: "rgba(60, 0, 90, 1)",
       light: "rgba(133,133,133, 0.53)",
       dark: "rgb(155,161,123)",
     },
