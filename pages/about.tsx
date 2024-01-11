@@ -6,12 +6,13 @@ import {
   Typography
 } from "@material-ui/core";
 import { Component } from "react";
+import theme from "../src/styles/theme";
 
 export default class About extends Component {
   render() {
     return (
       <Container style={{paddingBlock: 24}}>
-        <Card>
+        <Card style={{backgroundColor: theme.palette.primary.dark}} elevation={3}>
           <CardContent>
             <Typography variant="h2" >
               About Supreme Mathematics

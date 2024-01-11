@@ -59,8 +59,7 @@ const useStyles = makeStyles({
   meaning: {
     fontSize: "1.1em",
     display: "inline",
-    margin: "0 .333em",
-    padding: "0 .333em",
+    margin: "0 .25em",
     fontWeight: "bolder",
     textShadow: `.3em .3em .2em ${theme.palette.primary.dark}`,
   },
@@ -191,9 +190,9 @@ const Home = () => {
           {// DATE HAS TWO DIGITS? ADD THEM AND SHOW COMPONENT
           dateSum < 10 && dateArray.length > 1 ? (
             <React.Fragment>
-              <span className={classes.sentence}>&mdash;</span>
+              <span className={classes.sentence}>&mdash;&nbsp;</span>
               <Typography className={classes.sentence} display="inline">
-                all being born to&nbsp;
+              all being born to&nbsp;
               </Typography>
               <Typography className={classes.meaning} display="inline">
                 {`${(NUM_MAP as any)[dateSum].meaning} (${dateSum})`}

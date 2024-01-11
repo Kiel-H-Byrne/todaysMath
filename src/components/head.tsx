@@ -1,10 +1,9 @@
-import React from "react"
 import { Head } from "next/document"
 type IMyHead = {
-  title: string
-  description: string
-  url: string
-  ogImage: string
+  title?: string
+  description?: string
+  url?: string
+  ogImage?: string
 }
 export const MyHead = (props: IMyHead) => (
   <Head>

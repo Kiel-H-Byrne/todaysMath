@@ -67,7 +67,7 @@ const Nav = () => {
   return (
     <AppBar position="static" color="primary" className={classes.root} >
       <Toolbar disableGutters>
-        <Grid container direction="row" spacing={1}>
+        <Grid container direction="row" spacing={1} alignItems="center" >
           <Grid item>
             <Link href="/">
               <img

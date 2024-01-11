@@ -9,27 +9,25 @@ import { createTheme } from "@material-ui/core/styles"
 
 // Create a theme instance.
 const theme = createTheme({
+  //{"Gold":"ffd700","Slate gray":"7d8491","Cinnabar":"e94f37","English Violet":"3f334d","Claret":"6d213c"}
   palette: {
-    // common: {
-    //   black:"rgba(133,133,133, 1) "
-    // },
     text: {
       primary: "rgba(255,255,255, 1)",
       secondary: "rgba(0,0,0, 1)",
     },
     primary: {
-      main: "rgba(255,215,0, .8)",
-      light: "rgba(255, 215, 105, .8)",
+      main: "#ffd700",
+      light: "#7d8491",
       dark: "rgb(109, 89, 0, .7)",
     },
     secondary: {
       main: "rgba(60, 0, 90, 1)",
-      light: "rgba(133,133,133, 0.53)",
-      dark: "rgb(155,161,123)",
+      light: "rgba(160,100,190, 0.8)",
+      dark: "#E7453E",
     },
     error: {
       main: "#E7453E",
-      light: "#a065ff",
+      light: "#E7453Eaa",
     },
     background: {
       default: "rgba(35,25,05, 1)",
