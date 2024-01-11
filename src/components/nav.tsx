@@ -6,14 +6,14 @@ import theme from "../styles/theme";
 const links = [
   {
     href: "https://en.wikipedia.org/wiki/Five-Percent_Nation",
-    label: "NGE \n Information",
+    label: "NGE Information",
     isExternal: true
   },
   {
     href:
-      "https://en.wikipedia.org/wiki/Nation_of_Gods_and_Earths#Supreme_Mathematics",
-    label: "Supreme Math \n Information",
-    isExternal: true
+      "/about",
+    label: "Supreme Math: Explained",
+    isExternal: false
   },
 ].map(link => {
   return link;
