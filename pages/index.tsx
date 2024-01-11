@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import {
-  Grid,
-  Typography,
-  LinearProgress,
-  Input,
   Button,
-} from "@material-ui/core"
+  Grid,
+  Input,
+  LinearProgress,
+  Typography,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import React, { FormEvent, useEffect, useState } from "react";
 
-import Nav from "../src/components/nav"
 
-import { postCreate, postsFetch } from "../src/db/fsdb"
-import { NUM_MAP } from "../src/_CONSTANTZ"
-import { getDays, nth, reduceWord } from "../src/_FUNCTIONS"
-import theme from "../src/styles/theme"
-import { nanoid } from "nanoid"
+import { DocumentData } from "firebase/firestore";
+import { nanoid } from "nanoid";
+import { NUM_MAP } from "../src/_CONSTANTZ";
+import { getDays, nth } from "../src/_FUNCTIONS";
+import { postCreate, postsFetch } from "../src/db/fsdb";
+import theme from "../src/styles/theme";
 
 const useStyles = makeStyles({
   root: {
@@ -35,7 +35,7 @@ const useStyles = makeStyles({
     },
   },
   date: { color: "#FE6B8B", fontWeight: "bolder" },
-  dateNumber: { color: theme.palette.action.default },
+  dateNumber: { color: (theme.palette.action as any).default },
   theMath: {
     backgroundColor: theme.palette.background.paper,
     position: "sticky",
@@ -61,7 +61,6 @@ const useStyles = makeStyles({
     margin: "0 .333em",
     padding: "0 .333em",
     fontWeight: "bolder",
-    display: "inline",
     textShadow: `.3em .3em .2em ${theme.palette.primary.light}`,
   },
   input: {
@@ -70,7 +69,7 @@ const useStyles = makeStyles({
   },
   avatar: {
     margin: "auto",
-    borderRadius: "33%",
+    borderRadius: "50%",
   },
   discussion: { padding: "1rem" },
   form: { background: "rgba(212, 175, 55, .1)", borderRadius: "3%" },
@@ -89,7 +88,7 @@ const Home = () => {
   // const [name, setName] = useState(""); //user name from input
   // const [score, setScore] = useState(0); //the end value of adding name values.
   const [currentComment, setCurrentComment] = useState("")
-  const [comments, setComments] = useState([])
+  const [comments, setComments] = useState([] as DocumentData)
   const classes = useStyles()
 
   useEffect(() => {
@@ -103,11 +102,11 @@ const Home = () => {
     day: "numeric",
   }) //'Saturday, May 28'
   const dateArray = getDays(today) //date split into array
-  let dateSum = dateArray.reduce((a, b) => parseInt(a) + parseInt(b), 0) // sum of dateArray elements
-  let sumArray = dateSum > 9 ? Array.from(dateSum.toString()) : null //dateSum split into array of two numbers
+  let dateSum = dateArray.map(s => parseInt(s)).reduce((a, b) => a + b, 0) // sum of dateArray elements
+  let sumArray = dateSum > 9 ? Array.from(dateSum.toString()) : [] //dateSum split into array of two numbers
   let sumSum = sumArray // sum of sumArray elements
-    ? sumArray.reduce((a, b) => parseInt(a) + parseInt(b), 0)
-    : null
+    ? sumArray.map(s => parseInt(s)).reduce((a, b) => a + b, 0)
+    : 0
   // console.log({ today, dateArray, dateSum, sumArray, sumSum });
   // today's date is a number.
   // if the number is greater than 9 (or has two digits), add those numbers up.
@@ -127,37 +126,34 @@ const Home = () => {
       setComments([])
     }
   }
-  const writePost = async (message) => {
+  const writePost = async (message: string) => {
     let data = {}
-    let uuid = nanoid()
-    if (window.localStorage && window.localStorage.getItem("KBTM_UID")) {
-      uuid = window.localStorage.getItem("KBTM_UID")
-    } else {
-      window.localStorage.setItem("KBBTM_UID", uuid)
+    let uuid = window.localStorage.getItem("KBTM_UID") ?? nanoid()
+    if (window.localStorage && !window.localStorage.getItem("KBTM_UID")) {
+      window.localStorage.setItem("KBTM_UID", uuid)
     }
-    window.localStorage && !window.localStorage.getItem("")
     let date = new Date()
     let duid = `${date.getDate()}`
     let puid = new Date().getMilliseconds()
-    let post = {}
+    let post:any = {}
     post[puid] = message
     data = { [uuid]: { message, timestamp: new Date().getTime() } }
     // let refId = await postsUpdate(duid, data)
     let refId = await postCreate(data)
   }
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
     setCurrentComment(event.target.value)
   }
 
-  const handleChange2 = (event) => {
-    setName(event.target.value)
-    let value = reduceWord(event.target.value)
-    setScore(value)
-  }
+  // const handleChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setName(event.target.value)
+  //   let value = reduceWord(event.target.value)
+  //   setScore(value)
+  // }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     writePost(currentComment)
     setCurrentComment("")
@@ -165,7 +161,6 @@ const Home = () => {
   }
   return (
     <div className={classes.root}>
-      <Nav />
       <Grid
         container
         direction="column"
@@ -182,7 +177,7 @@ const Home = () => {
           <Typography className={classes.sentence}>
             Today's Date is&nbsp;
             <span className={classes.date}>
-              {`${todayString.match(/\w*[^\d]/g).join("")}the `}
+              {`${todayString.match(/\w*[^\d]/g)?.join("")}the `}
               <span className={classes.dateNumber}>
                 {`${new Date().getDate()}${nth(new Date().getDate())}`}
               </span>
@@ -194,7 +189,7 @@ const Home = () => {
           </Typography>
           {dateArray.map((day, idx) => (
             <Typography key={idx} className={classes.meaning} display="inline">
-              {`${NUM_MAP[day].meaning} (${day})`}
+              {`${(NUM_MAP as any)[day].meaning} (${day})`}
             </Typography>
           ))}
           {// DATE HAS TWO DIGITS? ADD THEM AND SHOW COMPONENT
@@ -205,7 +200,7 @@ const Home = () => {
                 all being born to&nbsp;
               </Typography>
               <Typography className={classes.meaning} display="inline">
-                {`${NUM_MAP[dateSum].meaning} (${dateSum})`}
+                {`${(NUM_MAP as any)[dateSum].meaning} (${dateSum})`}
               </Typography>
             </React.Fragment>
           ) : null}
@@ -222,7 +217,7 @@ const Home = () => {
                   className={classes.meaning}
                   display="inline"
                 >
-                  {`${NUM_MAP[day].meaning} (${day})`}
+                  {`${(NUM_MAP as any)[day].meaning} (${day})`}
                 </Typography>
               ))}
               <span className={classes.sentence}>&mdash;</span>
@@ -230,7 +225,7 @@ const Home = () => {
                 all being born to&nbsp;
               </Typography>
               <Typography className={classes.meaning} display="inline">
-                {`${NUM_MAP[sumSum].meaning} (${sumSum})`}
+                {`${(NUM_MAP as any)[sumSum].meaning} (${sumSum})`}
               </Typography>
             </React.Fragment>
           ) : null}
@@ -281,10 +276,8 @@ const Home = () => {
                 <Grid container direction="row" alignItems="center">
                   <Grid item xs={2} md={1}>
                     <img
-                      src={`https://adorable-avatars.broken.services/40/${uuid}.pngCopy`}
+                      src={`https://adorable-avatars.broken.services/43/${uuid}.webp`}
                       className={classes.avatar}
-                      height="43px"
-                      width="43px"
                     />
                   </Grid>
                   <Grid item xs={10} md={11}>

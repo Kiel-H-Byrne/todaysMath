@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 // Define a data object that holds the Supreme Mathematics for each date
 const data = {
@@ -14,7 +14,7 @@ const SearchApp = () => {
   // Handler for handling search button click
   const handleSearch = () => {
     if (searchDate in data) {
-      setResult(data[searchDate]);
+      setResult((data as any)[searchDate]);
     } else {
       setResult("No result found for the given date.");
     }
