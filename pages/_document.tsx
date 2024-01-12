@@ -28,7 +28,7 @@ class MyDocument extends Document {
             firebase.analytics()
           </script>
           <script
-            crossOrigin="true"
+            crossOrigin="anonymous"
             type="text/javascript"
             src="https://unpkg.com/default-passive-events"
           ></script>
