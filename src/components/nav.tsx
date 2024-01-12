@@ -1,25 +1,21 @@
-import React from "react";
-import Link from "next/link";
-import { GridList, Grid, Button, Toolbar, AppBar } from "@material-ui/core";
+import { AppBar, Button, Grid, Toolbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import Link from "next/link";
 import theme from "../styles/theme";
 
 const links = [
   {
     href: "https://en.wikipedia.org/wiki/Five-Percent_Nation",
-    label: "NGE \n Information"
+    label: "NGE Information",
+    isExternal: true
   },
   {
     href:
-      "https://genius.com/Nation-of-gods-and-earths-supreme-mathematics-annotated",
-    label: "Supreme Math \n Information"
-  }
-  // {
-  //   href: "https://linkedin.com/in/kielbyrne",
-  //   label: "About Me"
-  // }
+      "/about",
+    label: "Supreme Math: Explained",
+    isExternal: false
+  },
 ].map(link => {
-  link.key = `nav-link-${link.href}-${link.label}`;
   return link;
 });
 
@@ -54,13 +50,13 @@ const useStyles = makeStyles({
   },
   button: {
     [theme.breakpoints.down("sm")]: {
-      fontSize: "1.5em"
+      fontSize: "1.1em"
     },
     [theme.breakpoints.up("sm")]: {
-      fontSize: "1.1rem"
+      fontSize: "1rem"
     },
     [theme.breakpoints.up("lg")]: {
-      fontSize: "1.4rem"
+      fontSize: "1.2rem"
     }
   }
 });
@@ -69,9 +65,9 @@ const Nav = () => {
   const classes = useStyles();
 
   return (
-    <AppBar position="static" color="default" className={classes.root}>
+    <AppBar position="static" color="primary" className={classes.root} >
       <Toolbar disableGutters>
-        <Grid container direction="row">
+        <Grid container direction="row" spacing={1} alignItems="center" >
           <Grid item>
             <Link href="/">
               <img
@@ -84,16 +80,16 @@ const Nav = () => {
               />
             </Link>
           </Grid>
-          {links.map(({ key, href, label }) => (
-            <Grid item key={key}>
+          {links.map(({ href, label, isExternal }) => (
+            <Grid item key={`nav-link-${href}-${label}`}>
               <Link
                 href={href}
-                target="_blank"
-                rel="noopener"
+                target={isExternal ? "_blank" : "_self"}
+                rel={isExternal ? "noopener" : ""}
                 className={classes.link}
               >
                 <Button
-                  variant="text"
+                  variant="outlined"
                   color="secondary"
                   className={classes.button}
                 >

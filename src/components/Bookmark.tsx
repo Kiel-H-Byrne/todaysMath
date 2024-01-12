@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
+type IBookmark = {
+  date: string,
+      comment: string
+}
 const SaveBookmarkComponent = () => {
-  const [bookmarks, setBookmarks] = useState([]);
+  const [bookmarks, setBookmarks] = useState([] as IBookmark[] );
 
   // Function to handle bookmark button click
-  const handleBookmark = (date, comment) => {
+  const handleBookmark = (date: string, comment: string) => {
     const bookmark = {
       date: date,
       comment: comment

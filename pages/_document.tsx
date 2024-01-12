@@ -1,9 +1,9 @@
-import React from "react";
+import { ServerStyleSheets } from "@material-ui/styles";
 import "firebase/analytics";
-import Document, { Html, Main, NextScript } from "next/document"
-import { ServerStyleSheets } from "@material-ui/styles"
-import ReactGA from "react-ga"
-import Head from "../src/components/head"
+import Document, { Html, Main, NextScript } from "next/document";
+import React from "react";
+import ReactGA from "react-ga";
+import Head from "../src/components/head";
 
 ReactGA.initialize("UA-12892693-12")
 if (process.browser) {
@@ -28,7 +28,7 @@ class MyDocument extends Document {
             firebase.analytics()
           </script>
           <script
-            crossOrigin="true"
+            crossOrigin="anonymous"
             type="text/javascript"
             src="https://unpkg.com/default-passive-events"
           ></script>
