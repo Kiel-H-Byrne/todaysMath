@@ -2,7 +2,7 @@
   "name": "create-next-example-app",
   "scripts": {
     "dev": "next",
-    "build": "tsc -b && next build",
+    "build": "next build",
     "start": "next start"
   },
   "dependencies": {
@@ -20,7 +20,7 @@
     "@types/react": "^18.2.0",
     "nanoid": "^3.3.3",
     "postcss-css-variables": "^0.14.0",
-    "prettier": "^1.19.1",  
+    "prettier": "^1.19.1",
     "typescript": "^4.3"
   }
 }

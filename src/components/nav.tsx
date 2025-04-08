@@ -3,18 +3,17 @@ import {
   Box,
   Button,
   Drawer,
-  Hidden,
   IconButton,
   List,
   ListItem,
   ListItemText,
-  Toolbar,
+  Toolbar
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import Image from "next/image";
 import Link from "next/link";
-import { FiMenu, FiX } from "react-icons/fi";
+import React, { useState } from "react";
 import theme from "../styles/theme";
+import IconWrapper from "./IconWrapper";
 
 const links = [
   {
@@ -117,12 +116,12 @@ const Nav = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = (open: boolean) => (
-    event: KeyboardEvent | MouseEvent
+    event: React.KeyboardEvent | React.MouseEvent
   ) => {
     if (
       event.type === "keydown" &&
-      ((event as KeyboardEvent).key === "Tab" ||
-        (event as KeyboardEvent).key === "Shift")
+      ((event as React.KeyboardEvent).key === "Tab" ||
+        (event as React.KeyboardEvent).key === "Shift")
     ) {
       return;
     }
@@ -146,7 +145,7 @@ const Nav = () => {
           className={classes.closeButton}
           aria-label="Close menu"
         >
-          <FiX />
+          <IconWrapper name="FiX" />
         </IconButton>
       </Box>
       <List>
@@ -175,7 +174,7 @@ const Nav = () => {
     <AppBar position="static" color="primary" className={classes.root}>
       <Toolbar className={classes.toolbar}>
         <Box className={classes.logoContainer}>
-          <Hidden mdUp>
+          <Box display={{ xs: "block", md: "none" }}>
             <IconButton
               edge="start"
               className={classes.menuButton}
@@ -183,12 +182,12 @@ const Nav = () => {
               aria-label="menu"
               onClick={toggleDrawer(true)}
             >
-              <FiMenu />
+              <IconWrapper name="FiMenu" />
             </IconButton>
-          </Hidden>
+          </Box>
 
           <Link href="/">
-            <Image
+            <img
               src="https://i.pinimg.com/originals/76/55/0c/76550cdb7a2de95138746d536e99c7ae.png"
               alt="Nation of Gods & Earths"
               title="Nation of Gods & Earths"
@@ -197,27 +196,25 @@ const Nav = () => {
           </Link>
         </Box>
 
-        <Hidden smDown>
-          <Box className={classes.navLinks}>
-            {links.map(({ href, label, isExternal }) => (
-              <Link
-                key={`nav-link-${href}`}
-                href={href}
-                target={isExternal ? "_blank" : "_self"}
-                rel={isExternal ? "noopener noreferrer" : ""}
-                className={classes.link}
+        <Box display={{ xs: "none", sm: "block" }} className={classes.navLinks}>
+          {links.map(({ href, label, isExternal }) => (
+            <Link
+              key={`nav-link-${href}`}
+              href={href}
+              target={isExternal ? "_blank" : "_self"}
+              rel={isExternal ? "noopener noreferrer" : ""}
+              className={classes.link}
+            >
+              <Button
+                variant="outlined"
+                color="secondary"
+                className={classes.button}
               >
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  className={classes.button}
-                >
-                  {label}
-                </Button>
-              </Link>
-            ))}
-          </Box>
-        </Hidden>
+                {label}
+              </Button>
+            </Link>
+          ))}
+        </Box>
       </Toolbar>
       {renderMobileDrawer()}
     </AppBar>

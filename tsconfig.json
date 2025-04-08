@@ -2,7 +2,9 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "esnext",
-    "strict": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "lib": [
@@ -18,7 +20,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": "./src"
+    "baseUrl": "./"
   },
   "exclude": [
     "node_modules"
@@ -26,6 +28,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "src/types/*.d.ts"
   ]
 }

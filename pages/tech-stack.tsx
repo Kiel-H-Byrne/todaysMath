@@ -7,57 +7,58 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Typography,
+  Typography
 } from "@material-ui/core";
-import { DiResponsive } from "react-icons/di";
-import {
-  SiEslint,
-  SiFirebase,
-  SiGit,
-  SiGithub,
-  SiGoogleanalytics,
-  SiMui,
-  SiNextdotjs,
-  SiPrettier,
-  SiPwa,
-  SiReact,
-  SiSketch,
-  SiTypescript,
-  SiVercel,
-} from "react-icons/si";
+import IconWrapper from "src/components/IconWrapper";
 import theme from "../src/styles/theme";
 
 const heading = "TodaysMath Technology Stack";
 
 const frontendTechs = [
-  ["Next.js", "The React framework", <SiNextdotjs />],
-  ["React", "For building UIs through components", <SiReact />],
-  ["TypeScript", "This is the way...", <SiTypescript />],
+  ["Next.js", "The React framework", <IconWrapper name="SiNextdotjs" />],
+  [
+    "React",
+    "For building UIs through components",
+    <IconWrapper name="SiReact" />,
+  ],
+  ["TypeScript", "This is the way...", <IconWrapper name="SiTypescript" />],
   [
     "Material UI",
     "React component library that implements Google's Material Design",
-    <SiMui />,
+    <IconWrapper name="SiMui" />,
   ],
-  ["React Icons", "Quickly implement vector icons", <SiSketch />],
-  ["Google Firebase", "Firebase API for React", <SiFirebase />],
+  [
+    "React Icons",
+    "Quickly implement vector icons",
+    <IconWrapper name="SiSketch" />,
+  ],
+  [
+    "Google Firebase",
+    "Firebase API for React",
+    <IconWrapper name="SiFirebase" />,
+  ],
 ];
 
 const toolingTech = [
   [
     "ESLint",
     "Identifying and reporting on patterns in JavaScript",
-    <SiEslint />,
+    <IconWrapper name="SiEslint" />,
   ],
-  ["Vercel CLI", "The command-line interface for Vercel", <SiVercel />],
+  [
+    "Vercel CLI",
+    "The command-line interface for Vercel",
+    <IconWrapper name="SiVercel" />,
+  ],
   // [
   //   "Visual Studio Code",
   //   "A code editor for web development",
-  //   <SiVisualstudio />,
+  //             <IconWrapper name="SiVisualstudio" />,
   // ],
   [
     "Prettier",
     "An opinionated code formatter enforcing consistencies",
-    <SiPrettier />,
+    <IconWrapper name="SiPrettier" />,
   ],
 ];
 
@@ -65,26 +66,34 @@ const infrastructureTech = [
   [
     "Vercel",
     "Provides CDN networking, atomic deployments, & DNS management",
-    <SiVercel />,
+    <IconWrapper name="SiVercel" />,
   ],
   [
     "Google Analytics",
     "Measure advertising ROI as well as track page events and SEO.",
-    <SiGoogleanalytics />,
+    <IconWrapper name="SiGoogleanalytics" />,
   ],
-  ["Github", "Provides code hosting and version control", <SiGithub />],
+  [
+    "Github",
+    "Provides code hosting and version control",
+    <IconWrapper name="SiGithub" />,
+  ],
 ];
 const methodologiesTech = [
-  ["PWA", "Progressive Web App (PWA) for offline support", <SiPwa />],
+  [
+    "PWA",
+    "Progressive Web App (PWA) for offline support",
+    <IconWrapper name="SiPwa" />,
+  ],
   [
     "Responsive Design",
     "Site adapts smoothly across all device sizes",
-    <DiResponsive />,
+    <IconWrapper name="DiResponsive" />,
   ],
   [
     "Git Workflow",
     "Following proven practices like branching, PRs, semantic versioning",
-    <SiGit />,
+    <IconWrapper name="SiGit" />,
   ],
 ];
 
@@ -161,8 +170,12 @@ export function TechList({ techs }: { techs: (string | any)[][] }) {
   return (
     <List>
       {techs.map((tech, i) => (
-        <ListItem key={i} >
-          <ListItemIcon style={{color: theme.palette.secondary.dark, fontSize: "2em"}}>{tech[2]}</ListItemIcon>
+        <ListItem key={i}>
+          <ListItemIcon
+            style={{ color: theme.palette.secondary.dark, fontSize: "2em" }}
+          >
+            {tech[2]}
+          </ListItemIcon>
           <ListItemText>
             <strong>{tech[0]}</strong> - {tech[1]}
           </ListItemText>
