@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Box,
   Button,
   Drawer,
   Hidden,
@@ -10,8 +11,8 @@ import {
   Toolbar,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import theme from "../styles/theme";
 
@@ -116,12 +117,12 @@ const Nav = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = (open: boolean) => (
-    event: React.KeyboardEvent | React.MouseEvent
+    event: KeyboardEvent | MouseEvent
   ) => {
     if (
       event.type === "keydown" &&
-      ((event as React.KeyboardEvent).key === "Tab" ||
-        (event as React.KeyboardEvent).key === "Shift")
+      ((event as KeyboardEvent).key === "Tab" ||
+        (event as KeyboardEvent).key === "Shift")
     ) {
       return;
     }
@@ -139,7 +140,7 @@ const Nav = () => {
         paper: classes.drawerPaper,
       }}
     >
-      <div className={classes.drawerHeader}>
+      <Box className={classes.drawerHeader}>
         <IconButton
           onClick={toggleDrawer(false)}
           className={classes.closeButton}
@@ -147,7 +148,7 @@ const Nav = () => {
         >
           <FiX />
         </IconButton>
-      </div>
+      </Box>
       <List>
         <ListItem button component="a" href="/" onClick={toggleDrawer(false)}>
           <ListItemText primary="Home" />
@@ -173,7 +174,7 @@ const Nav = () => {
   return (
     <AppBar position="static" color="primary" className={classes.root}>
       <Toolbar className={classes.toolbar}>
-        <div className={classes.logoContainer}>
+        <Box className={classes.logoContainer}>
           <Hidden mdUp>
             <IconButton
               edge="start"
@@ -187,17 +188,17 @@ const Nav = () => {
           </Hidden>
 
           <Link href="/">
-            <img
+            <Image
               src="https://i.pinimg.com/originals/76/55/0c/76550cdb7a2de95138746d536e99c7ae.png"
               alt="Nation of Gods & Earths"
               title="Nation of Gods & Earths"
               className={classes.logo}
             />
           </Link>
-        </div>
+        </Box>
 
         <Hidden smDown>
-          <div className={classes.navLinks}>
+          <Box className={classes.navLinks}>
             {links.map(({ href, label, isExternal }) => (
               <Link
                 key={`nav-link-${href}`}
@@ -215,7 +216,7 @@ const Nav = () => {
                 </Button>
               </Link>
             ))}
-          </div>
+          </Box>
         </Hidden>
       </Toolbar>
       {renderMobileDrawer()}
