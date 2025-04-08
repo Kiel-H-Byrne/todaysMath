@@ -56,7 +56,7 @@ const Footer = () => {
           href="/tech-stack"
           color="primary"
           className={classes.link}
-          aria-label="Learn how we made this site"
+          // aria-label="Learn how we made this site"
         >
           How We Made this Site
         </Link>

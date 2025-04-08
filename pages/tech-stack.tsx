@@ -24,7 +24,6 @@ import {
   SiSketch,
   SiTypescript,
   SiVercel,
-  SiVisualstudio,
 } from "react-icons/si";
 import theme from "../src/styles/theme";
 
@@ -50,11 +49,11 @@ const toolingTech = [
     <SiEslint />,
   ],
   ["Vercel CLI", "The command-line interface for Vercel", <SiVercel />],
-  [
-    "Visual Studio Code",
-    "A code editor for web development",
-    <SiVisualstudio />,
-  ],
+  // [
+  //   "Visual Studio Code",
+  //   "A code editor for web development",
+  //   <SiVisualstudio />,
+  // ],
   [
     "Prettier",
     "An opinionated code formatter enforcing consistencies",
