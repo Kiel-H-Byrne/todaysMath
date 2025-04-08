@@ -8,6 +8,9 @@ import Footer from '../src/components/footer';
 import Nav from '../src/components/nav';
 import theme from "../src/styles/theme";
 
+// Import global CSS
+import "../src/styles/global.css";
+
 export default class MyApp extends App {
   componentDidMount() {
     // Remove the server-side injected CSS.
@@ -55,7 +58,6 @@ export default class MyApp extends App {
           <title>{APP_SETTINGS.name}</title>
         </Head>
         <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <Nav />
           <Component {...pageProps} />

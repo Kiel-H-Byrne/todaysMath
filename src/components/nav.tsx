@@ -1,91 +1,209 @@
-import { AppBar, Button, Grid, Toolbar } from "@material-ui/core";
+import {
+  AppBar,
+  Button,
+  Drawer,
+  Hidden,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Toolbar,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import Link from "next/link";
+import { useState } from "react";
+import { FiMenu, FiX } from "react-icons/fi";
 import theme from "../styles/theme";
 
 const links = [
   {
     href: "https://en.wikipedia.org/wiki/Five-Percent_Nation",
     label: "NGE Information",
-    isExternal: true
+    isExternal: true,
   },
   {
-    href:
-      "/about",
+    href: "/about",
     label: "Supreme Math: Explained",
-    isExternal: false
+    isExternal: false,
   },
-].map(link => {
-  return link;
-});
+  {
+    href: "/tech-stack",
+    label: "Tech Stack",
+    isExternal: false,
+  },
+];
 
 const useStyles = makeStyles({
   root: {
-    // background:
-    //   "linear-gradient(rgba(240, 0, 255, 0.5), rgba(255, 255, 0, 0.5)), url('img/handEarth.jpg')",
     margin: "0 auto",
+    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+    transition: "all 0.3s ease-in-out",
+  },
+  toolbar: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
+    padding: `0 ${theme.spacing(2)}px`,
+  },
+  logoContainer: {
+    display: "flex",
+    alignItems: "center",
+  },
+  logo: {
+    height: 50,
+    width: 50,
+    borderRadius: "50%",
+    transition: "transform 0.3s ease-in-out",
+    margin: theme.spacing(0, 2, 0, 0),
+    "&:hover": {
+      transform: "scale(1.05)",
+    },
     [theme.breakpoints.down("sm")]: {
-      fontSize: "0.5rem",
-      padding: ".1rem"
+      height: 40,
+      width: 40,
+      margin: theme.spacing(0, 1, 0, 0),
     },
-    [theme.breakpoints.up("sm")]: {
-      fontSize: "1.1rem",
-      padding: ".3rem"
-    },
-    [theme.breakpoints.up("lg")]: {
-      fontSize: "1.4rem",
-      padding: ".4rem"
-    }
+  },
+  navLinks: {
+    display: "flex",
+    alignItems: "center",
   },
   link: {
-    color: "#067df7",
     textDecoration: "none",
-    whiteSpace: "pre"
-  },
-  avatar: {
-    margin: "3px 13px 3px 3px",
-    [theme.breakpoints.down("sm")]: {
-      margin: "3px"
-    }
+    margin: theme.spacing(0, 1),
   },
   button: {
+    borderRadius: 8,
+    padding: theme.spacing(1, 2),
+    fontWeight: 600,
+    transition: "all 0.2s ease-in-out",
+    "&:hover": {
+      transform: "translateY(-2px)",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    },
     [theme.breakpoints.down("sm")]: {
-      fontSize: "1.1em"
+      padding: theme.spacing(0.5, 1.5),
     },
-    [theme.breakpoints.up("sm")]: {
-      fontSize: "1rem"
-    },
-    [theme.breakpoints.up("lg")]: {
-      fontSize: "1.2rem"
-    }
-  }
+  },
+  menuButton: {
+    marginRight: theme.spacing(1),
+    color: theme.palette.primary.main,
+  },
+  drawer: {
+    width: 250,
+  },
+  drawerPaper: {
+    width: 250,
+    backgroundColor: theme.palette.background.default,
+  },
+  drawerHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: theme.spacing(1),
+    backgroundColor: theme.palette.primary.main,
+  },
+  closeButton: {
+    color: theme.palette.background.default,
+  },
+  drawerItem: {
+    margin: theme.spacing(1, 0),
+  },
 });
 
 const Nav = () => {
   const classes = useStyles();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const toggleDrawer = (open: boolean) => (
+    event: React.KeyboardEvent | React.MouseEvent
+  ) => {
+    if (
+      event.type === "keydown" &&
+      ((event as React.KeyboardEvent).key === "Tab" ||
+        (event as React.KeyboardEvent).key === "Shift")
+    ) {
+      return;
+    }
+
+    setDrawerOpen(open);
+  };
+
+  const renderMobileDrawer = () => (
+    <Drawer
+      className={classes.drawer}
+      anchor="left"
+      open={drawerOpen}
+      onClose={toggleDrawer(false)}
+      classes={{
+        paper: classes.drawerPaper,
+      }}
+    >
+      <div className={classes.drawerHeader}>
+        <IconButton
+          onClick={toggleDrawer(false)}
+          className={classes.closeButton}
+          aria-label="Close menu"
+        >
+          <FiX />
+        </IconButton>
+      </div>
+      <List>
+        <ListItem button component="a" href="/" onClick={toggleDrawer(false)}>
+          <ListItemText primary="Home" />
+        </ListItem>
+        {links.map(({ href, label, isExternal }) => (
+          <ListItem
+            button
+            key={`drawer-${href}`}
+            component="a"
+            href={href}
+            target={isExternal ? "_blank" : "_self"}
+            rel={isExternal ? "noopener noreferrer" : ""}
+            onClick={toggleDrawer(false)}
+            className={classes.drawerItem}
+          >
+            <ListItemText primary={label} />
+          </ListItem>
+        ))}
+      </List>
+    </Drawer>
+  );
 
   return (
-    <AppBar position="static" color="primary" className={classes.root} >
-      <Toolbar disableGutters>
-        <Grid container direction="row" spacing={1} alignItems="center" >
-          <Grid item>
-            <Link href="/">
-              <img
-                height="53px"
-                width="53px"
-                src="https://i.pinimg.com/originals/76/55/0c/76550cdb7a2de95138746d536e99c7ae.png"
-                alt="Nation of Gods &amp; Earths"
-                title="Nation of Gods &amp; Earths"
-                className={classes.avatar}
-              />
-            </Link>
-          </Grid>
-          {links.map(({ href, label, isExternal }) => (
-            <Grid item key={`nav-link-${href}-${label}`}>
+    <AppBar position="static" color="primary" className={classes.root}>
+      <Toolbar className={classes.toolbar}>
+        <div className={classes.logoContainer}>
+          <Hidden mdUp>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              style={{ color: "#000" }}
+              aria-label="menu"
+              onClick={toggleDrawer(true)}
+            >
+              <FiMenu />
+            </IconButton>
+          </Hidden>
+
+          <Link href="/">
+            <img
+              src="https://i.pinimg.com/originals/76/55/0c/76550cdb7a2de95138746d536e99c7ae.png"
+              alt="Nation of Gods & Earths"
+              title="Nation of Gods & Earths"
+              className={classes.logo}
+            />
+          </Link>
+        </div>
+
+        <Hidden smDown>
+          <div className={classes.navLinks}>
+            {links.map(({ href, label, isExternal }) => (
               <Link
+                key={`nav-link-${href}`}
                 href={href}
                 target={isExternal ? "_blank" : "_self"}
-                rel={isExternal ? "noopener" : ""}
+                rel={isExternal ? "noopener noreferrer" : ""}
                 className={classes.link}
               >
                 <Button
@@ -96,12 +214,13 @@ const Nav = () => {
                   {label}
                 </Button>
               </Link>
-            </Grid>
-          ))}
-        </Grid>
+            ))}
+          </div>
+        </Hidden>
       </Toolbar>
+      {renderMobileDrawer()}
     </AppBar>
-  )
+  );
 };
 
 export default Nav;
