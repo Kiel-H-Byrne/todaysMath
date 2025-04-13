@@ -1,7 +1,7 @@
 import React from 'react';
 import { DiResponsive } from 'react-icons/di';
 import { FiMenu, FiX } from 'react-icons/fi';
-import { SiEslint, SiFirebase, SiGit, SiGithub, SiGoogleanalytics, SiMui, SiNextdotjs, SiPrettier, SiPwa, SiReact, SiSketch, SiTypescript, SiVercel, SiVisualstudio } from 'react-icons/si';
+import { SiEslint, SiFirebase, SiGit, SiGithub, SiGoogleanalytics, SiMui, SiNextdotjs, SiPrettier, SiPwa, SiReact, SiSketch, SiTypescript, SiVercel } from 'react-icons/si';
 
 // Define a mapping of icon names to their components
 const iconMap = {
@@ -20,7 +20,6 @@ const iconMap = {
   SiGithub,
   SiPwa,
   SiGit,
-  SiVisualstudio,
   DiResponsive
 };
 
