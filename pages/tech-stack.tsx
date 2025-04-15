@@ -10,7 +10,7 @@ import {
   Typography
 } from "@material-ui/core";
 import IconWrapper from "src/components/IconWrapper";
-import theme from "../src/styles/theme";
+import theme from "src/styles/theme";
 
 const heading = "TodaysMath Technology Stack";
 

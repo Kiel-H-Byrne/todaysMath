@@ -3,10 +3,10 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import App from "next/app";
 import Head from "next/head";
 import React from "react";
-import { APP_SETTINGS } from "../src/_CONSTANTZ";
-import Footer from '../src/components/footer';
-import Nav from '../src/components/nav';
+import Footer from '../src/components/Footer';
+import Nav from '../src/components/Nav';
 import theme from "../src/styles/theme";
+import { APP_SETTINGS } from "../src/_CONSTANTZ";
 
 // Import global CSS
 import "../src/styles/global.css";
