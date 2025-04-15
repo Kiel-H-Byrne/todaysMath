@@ -4,92 +4,86 @@ import {
   Grid,
   Input,
   LinearProgress,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { FormEvent, useEffect, useState } from "react";
 
 import { DocumentData } from "firebase/firestore";
 import { nanoid } from "nanoid";
+import { IPost, postCreate, postsFetch } from "../src/db/fsdb";
 import { NUM_MAP } from "../src/_CONSTANTZ";
 import { getDays, nth } from "../src/_FUNCTIONS";
-import { IPost, postCreate, postsFetch } from "../src/db/fsdb";
-import theme from "../src/styles/theme";
-
-const useStyles = makeStyles({
-  root: {
-    // background:
-    //   "linear-gradient(rgba(240, 0, 255, 0.5), rgba(255, 255, 0, 0.5)), url('img/handEarth.jpg')",
-    color: "white",
-    height: "100%",
-    position: "relative",
-    padding: theme.spacing(0),
-    margin: theme.spacing(0),
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1rem",
-    },
-    [theme.breakpoints.up("sm")]: {
-      fontSize: "1.1rem",
-    },
-    [theme.breakpoints.up("lg")]: {
-      fontSize: "1.4rem",
-    },
-  },
-  date: { color: "#FE6B8B", fontWeight: "bolder" },
-  dateNumber: { color: (theme.palette.action as any).default },
-  theMath: {
-    // backgroundColor: theme.palette.background.paper,
-    // position: "sticky",
-    // top: 0,
-    margin: "1rem auto 0",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.3rem",
-      padding: "1rem",
-    },
-    [theme.breakpoints.up("sm")]: {
-      fontSize: "2rem",
-      padding: "1rem 3rem",
-    },
-    [theme.breakpoints.up("lg")]: {
-      fontSize: "3rem",
-      padding: "1rem 3rem",
-    },
-  },
-  sentence: { display: "inline", fontSize: "inherit", lineHeight: "1.8em" },
-  meaning: {
-    fontSize: "1.1em",
-    display: "inline",
-    margin: "0 .25em",
-    fontWeight: "bolder",
-    textShadow: `.3em .3em .2em ${theme.palette.primary.dark}`,
-  },
-  input: {
-    fontSize: "24px",
-    fontFamily: "Just Another Hand, cursive",
-  },
-  avatar: {
-    margin: "auto",
-    borderRadius: "50%",
-  },
-  discussion: { padding: "1rem" },
-  form: { background: "rgba(212, 175, 55, .1)", borderRadius: "3%" },
-  comments: {
-    fontFamily: "Cormorant Garamond, serif",
-    lineHeight: "1em",
-    fontSize: "1.2em",
-  },
-  footer: {
-    position: "relative",
-    bottom: 0,
-  },
-});
 
 const Home = () => {
   // const [name, setName] = useState(""); //user name from input
   // const [score, setScore] = useState(0); //the end value of adding name values.
   const [currentComment, setCurrentComment] = useState("");
   const [comments, setComments] = useState([] as DocumentData);
-  const classes = useStyles();
+  const classes = makeStyles((theme) => ({
+    root: {
+      height: "100%",
+      position: "relative",
+      padding: theme.spacing(0),
+      margin: theme.spacing(0),
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "1rem",
+      },
+      [theme.breakpoints.up("sm")]: {
+        fontSize: "1.1rem",
+      },
+      [theme.breakpoints.up("lg")]: {
+        fontSize: "1.4rem",
+      },
+    },
+    date: { color: "#FE6B8B", fontWeight: "bolder" },
+    dateNumber: { color: (theme.palette.action as any).default },
+    theMath: {
+      // backgroundColor: theme.palette.background.paper,
+      // position: "sticky",
+      // top: 0,
+      margin: "1rem auto 0",
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "1.3rem",
+        padding: "1rem",
+      },
+      [theme.breakpoints.up("sm")]: {
+        fontSize: "1.1rem",
+        padding: "1rem 3rem",
+      },
+      [theme.breakpoints.up("lg")]: {
+        fontSize: "3rem",
+        padding: "1rem 3rem",
+      },
+    },
+    sentence: { display: "inline", fontSize: "inherit", lineHeight: "1.8em" },
+    meaning: {
+      fontSize: "1.1em",
+      display: "inline",
+      margin: "0 .25em",
+      fontWeight: "bolder",
+      textShadow: `.3em .3em .2em ${theme.palette.primary.dark}`,
+    },
+    input: {
+      fontSize: "24px",
+      fontFamily: "Just Another Hand, cursive",
+    },
+    avatar: {
+      margin: "auto",
+      borderRadius: "50%",
+    },
+    discussion: { padding: "1rem" },
+    form: { background: "rgba(212, 175, 55, .1)", borderRadius: "3%" },
+    comments: {
+      fontFamily: "Cormorant Garamond, serif",
+      lineHeight: "1em",
+      fontSize: "1.2em",
+    },
+    footer: {
+      position: "relative",
+      bottom: 0,
+    },
+  }))()
 
   useEffect(() => {
     getPosts();
@@ -192,7 +186,7 @@ const Home = () => {
             <React.Fragment>
               <span className={classes.sentence}>&mdash;&nbsp;</span>
               <Typography className={classes.sentence} display="inline">
-              all being born to&nbsp;
+                all being born to&nbsp;
               </Typography>
               <Typography className={classes.meaning} display="inline">
                 {`${(NUM_MAP as any)[dateSum].meaning} (${dateSum})`}

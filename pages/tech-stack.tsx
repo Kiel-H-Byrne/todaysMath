@@ -10,7 +10,8 @@ import {
   Typography
 } from "@material-ui/core";
 import IconWrapper from "src/components/IconWrapper";
-import theme from "src/styles/theme";
+import { useMyTheme } from "src/context/ThemeContext";
+import { getMyTheme } from "src/styles/themes";
 
 const heading = "TodaysMath Technology Stack";
 
@@ -98,6 +99,8 @@ const methodologiesTech = [
 ];
 
 export default function TechPage() {
+  const { mode } = useMyTheme();
+  const theme = getMyTheme(mode);
   const bg_fg_color = theme.palette.primary.main;
   const urlEncodedColor = encodeURIComponent(bg_fg_color);
   const patternOpacity = 0.2;
@@ -138,6 +141,8 @@ export function Section({
   title: string;
   techs: (string | any)[][];
 }) {
+  const { mode } = useMyTheme();
+  const theme = getMyTheme(mode); 
   const bg_color = theme.palette.primary.dark;
   const bg_fg_color = theme.palette.secondary.main;
   const urlEncodedColor = encodeURIComponent(bg_fg_color);
@@ -167,6 +172,9 @@ export function Section({
 }
 
 export function TechList({ techs }: { techs: (string | any)[][] }) {
+  const { mode } = useMyTheme();  
+  const theme = getMyTheme(mode); 
+  
   return (
     <List>
       {techs.map((tech, i) => (

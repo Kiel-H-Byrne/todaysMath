@@ -6,19 +6,19 @@ import {
   Typography
 } from "@material-ui/core";
 import { Component } from "react";
-import theme from "../src/styles/theme";
 
 export default class About extends Component {
   render() {
     return (
-      <Container style={{paddingBlock: 24}}>
-        <Card style={{backgroundColor: theme.palette.primary.dark}} elevation={3}>
+      <Container style={{ paddingBlock: 24 }}>
+        <Card
+          elevation={3}
+        >
           <CardContent>
-            <Typography variant="h2" >
-              About Supreme Mathematics
-            </Typography>
+            <Typography variant="h2">About Supreme Mathematics</Typography>
             <Typography variant="body1" component={"p"} gutterBottom>
-              Listen to Lord Jamar explain the meaning and significance of Supreme Mathematics.
+              Listen to Lord Jamar explain the meaning and significance of
+              Supreme Mathematics.
             </Typography>
             <CardMedia
               height="500"

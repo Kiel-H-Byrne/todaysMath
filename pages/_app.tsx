@@ -1,15 +1,28 @@
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { ThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import App from "next/app";
 import Head from "next/head";
 import React from "react";
-import Footer from '../src/components/Footer';
-import Nav from '../src/components/Nav';
-import theme from "../src/styles/theme";
+import Footer from "src/components/Footer";
+import Navigation from '../src/components/Navigation';
+import { ThemeProvider, useMyTheme } from '../src/context/ThemeContext';
+import { getMyTheme } from '../src/styles/themes';
 import { APP_SETTINGS } from "../src/_CONSTANTZ";
 
-// Import global CSS
-import "../src/styles/global.css";
+// This component needs to be inside the ThemeProvider to access the theme context
+const AppContent = ({ Component, pageProps }: { Component: any, pageProps: any }) => {
+  const { mode } = useMyTheme();
+  const currentTheme = getMyTheme(mode);
+
+  return (
+    <MuiThemeProvider theme={currentTheme}>
+      <CssBaseline />
+      <Navigation />
+      <Component {...pageProps} />
+      <Footer />
+    </MuiThemeProvider>
+  );
+};
 
 export default class MyApp extends App {
   componentDidMount() {
@@ -35,7 +48,7 @@ export default class MyApp extends App {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
           />
-          <meta name="theme-color" content={theme.palette.primary.main} />
+          <meta name="theme-color" content="#FFD700" />
 
           <meta property="og:type" content="website" />
           <meta property="og:url" content={APP_SETTINGS.url} />
@@ -57,11 +70,8 @@ export default class MyApp extends App {
           <meta property="og:image:height" content="630" />
           <title>{APP_SETTINGS.name}</title>
         </Head>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Nav />
-          <Component {...pageProps} />
-          <Footer />
+        <ThemeProvider>
+          <AppContent Component={Component} pageProps={pageProps} />
         </ThemeProvider>
       </React.Fragment>
     );
