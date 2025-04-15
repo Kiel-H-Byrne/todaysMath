@@ -33,8 +33,10 @@ const ThemeToggle: React.FC = () => {
         aria-label={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
       >
         {mode === "dark" ? (
+          //@ts-ignore
           <FiSun color={classes.themeToggle} />
         ) : (
+          //@ts-ignore
           <FiMoon color={classes.themeToggle} />
         )}
       </IconButton>
