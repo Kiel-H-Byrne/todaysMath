@@ -3,7 +3,7 @@ import "firebase/analytics";
 import Document, { Html, Main, NextScript } from "next/document";
 import React from "react";
 import ReactGA from "react-ga";
-import Head from "../src/components/head";
+import Head from "../src/components/Head";
 
 ReactGA.initialize("UA-12892693-12")
 if (typeof window !== 'undefined') {

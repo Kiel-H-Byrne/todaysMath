@@ -22,8 +22,6 @@ const Home = () => {
   const [comments, setComments] = useState([] as DocumentData);
   const classes = makeStyles((theme) => ({
     root: {
-      // background:
-      //   "linear-gradient(rgba(240, 0, 255, 0.5), rgba(255, 255, 0, 0.5)), url('img/handEarth.jpg')",
       height: "100%",
       position: "relative",
       padding: theme.spacing(0),
@@ -165,7 +163,7 @@ const Home = () => {
           className={classes.theMath}
           alignItems="center"
         >
-          <Typography className={classes.sentence}>
+          <Typography className={classes.sentence} component={'h1'}>
             Today's Date is&nbsp;
             <span className={classes.date}>
               {`${todayString.match(/\w*[^\d]/g)?.join("")}the `}
@@ -230,15 +228,15 @@ const Home = () => {
           // style={{ border: "1px solid red", borderRadius: 4 }}
           spacing={2}
         >
-          <Grid item xs={12} sm={5}>
-            <Typography variant="h5" align="center" gutterBottom>
-              Discussion:
-            </Typography>
+          <Grid item xs sm={12} md={12} lg={12} xl={12}>
+            <Typography variant="h3" gutterBottom align="center">Build...</Typography>
+          </Grid>
+          <Grid item xs={12} sm={6} >
             <form onSubmit={handleSubmit} className={classes.form}>
               <Input
                 multiline
                 fullWidth
-                rows={3}
+                rows={5}
                 className={classes.input}
                 onChange={handleChange}
                 color={"secondary"}
@@ -253,18 +251,9 @@ const Home = () => {
               </Button>
             </form>
           </Grid>
-          <Grid item xs={12} sm={7}>
+          <Grid item xs={12} sm={6} style={{overflowY:"scroll", maxHeight: 360}} >
             {!comments && <LinearProgress />}
-            {comments.length == 0 ? (
-              <Typography variant="h5" align="center" gutterBottom>
-                "No Comments Today"
-              </Typography>
-            ) : (
-              <Typography variant="h5" align="center" gutterBottom>
-                Comments:
-              </Typography>
-            )}
-            {Object.values(comments).map(({ uuid, message }, i) => (
+            {Object.values(comments).map(({ uuid, message }, i) => message &&(
               <div key={`${uuid}-${i}`} className={classes.comments}>
                 <Grid container direction="row" alignItems="center">
                   <Grid item xs={2} md={1}>

@@ -3,7 +3,7 @@ import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import App from "next/app";
 import Head from "next/head";
 import React from "react";
-import Footer from '../src/components/footer';
+import Footer from "src/components/Footer";
 import Navigation from '../src/components/Navigation';
 import { ThemeProvider, useTheme } from '../src/context/ThemeContext';
 import { getTheme } from '../src/styles/themes';
