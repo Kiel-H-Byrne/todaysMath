@@ -2,8 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "esnext",
-    "strict": false,
-    "noImplicitAny": false,
+    "strict": true,
     "suppressImplicitAnyIndexErrors": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -20,7 +19,6 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": "./"
   },
   "exclude": [
     "node_modules"
