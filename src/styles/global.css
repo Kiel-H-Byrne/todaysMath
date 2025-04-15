@@ -1,0 +1,99 @@
+/* Global styles for the application */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Merienda:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+
+/* Reset and base styles */
+html {
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+  scroll-behavior: smooth;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Theme transition classes */
+.theme-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Dark mode specific styles */
+.dark-mode {
+  background-color: #1A1A1A;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Light mode specific styles */
+.light-mode {
+  background-color: #F5F5F5;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes float-upwards {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  50%, 100% {
+    transform: translate(-1px, -5px);
+  }
+}
+
+/* Utility classes */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Accessibility improvements */
+:focus {
+  outline: 2px solid #FFD700;
+  outline-offset: 2px;
+}
+
+/* Responsive media queries */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1025px) {
+  html {
+    font-size: 18px;
+  }
+}
