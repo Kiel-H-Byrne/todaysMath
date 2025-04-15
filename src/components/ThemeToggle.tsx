@@ -1,7 +1,7 @@
 import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
 import React from "react";
 import { FiMoon, FiSun } from "react-icons/fi";
-import { useTheme } from "../context/ThemeContext";
+import { useMyTheme } from "../context/ThemeContext";
 
 const useStyles = makeStyles((theme) => ({
   themeToggle: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ThemeToggle: React.FC = () => {
   const classes = useStyles();
-  const { mode, toggleTheme } = useTheme();
+  const { mode, toggleTheme } = useMyTheme();
 
   return (
     <Tooltip

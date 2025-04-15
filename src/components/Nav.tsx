@@ -7,12 +7,12 @@ import {
   List,
   ListItem,
   ListItemText,
+  Theme,
   Toolbar
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import Link from "next/link";
 import React, { useState } from "react";
-import theme from "../styles/theme";
 import IconWrapper from "./IconWrapper";
 
 const links = [
@@ -33,7 +33,7 @@ const links = [
   },
 ];
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     margin: "0 auto",
     boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
@@ -109,7 +109,7 @@ const useStyles = makeStyles({
   drawerItem: {
     margin: theme.spacing(1, 0),
   },
-});
+}));
 
 const Nav = () => {
   const classes = useStyles();

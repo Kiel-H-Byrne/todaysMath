@@ -5,14 +5,14 @@ import Head from "next/head";
 import React from "react";
 import Footer from "src/components/Footer";
 import Navigation from '../src/components/Navigation';
-import { ThemeProvider, useTheme } from '../src/context/ThemeContext';
-import { getTheme } from '../src/styles/themes';
+import { ThemeProvider, useMyTheme } from '../src/context/ThemeContext';
+import { getMyTheme } from '../src/styles/themes';
 import { APP_SETTINGS } from "../src/_CONSTANTZ";
 
 // This component needs to be inside the ThemeProvider to access the theme context
 const AppContent = ({ Component, pageProps }: { Component: any, pageProps: any }) => {
-  const { mode } = useTheme();
-  const currentTheme = getTheme(mode);
+  const { mode } = useMyTheme();
+  const currentTheme = getMyTheme(mode);
 
   return (
     <MuiThemeProvider theme={currentTheme}>

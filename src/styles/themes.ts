@@ -114,6 +114,6 @@ export const lightTheme = createTheme({
 
 export type ThemeMode = 'light' | 'dark';
 
-export const getTheme = (mode: ThemeMode): Theme => {
+export const getMyTheme = (mode: ThemeMode): Theme => {
   return mode === 'light' ? lightTheme : darkTheme;
 };
